@@ -1,0 +1,33 @@
+# Dependencies
+/vendor/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs and runtime files
+/logs/*
+!/logs/.gitkeep
+*.log
+*.tmp
+
+# User-generated uploads (keep folders only)
+/public/uploads/articles/*
+!/public/uploads/articles/.gitkeep
+/public/uploads/categories/*
+!/public/uploads/categories/.gitkeep
+
+# Cache/build artifacts
+/public/assets/css/*.map
+/public/assets/js/*.map
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.idea/
+.vscode/
+*.swp
+*.swo

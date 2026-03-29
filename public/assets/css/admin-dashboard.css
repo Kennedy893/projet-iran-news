@@ -83,6 +83,16 @@ button.btn-primary:hover {
     background: var(--brand-dark);
 }
 
+.btn-danger {
+    border-color: #e3b9b9;
+    background: #fff3f3;
+    color: #8f2323;
+}
+
+.btn-danger:hover {
+    background: #ffe8e8;
+}
+
 .grid-stats {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -125,6 +135,14 @@ button.btn-primary:hover {
     margin-top: 0;
 }
 
+.section-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 .table-wrap {
     overflow-x: auto;
 }
@@ -133,6 +151,32 @@ table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.95rem;
+}
+
+.table-clean tbody tr:nth-child(even) {
+    background: #fafcfd;
+}
+
+.item-title {
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.item-subtext {
+    margin-top: 0.2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid #cce1da;
+    background: #eef8f5;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: #1b5f4f;
 }
 
 th,
@@ -150,6 +194,88 @@ th {
 
 form.inline {
     display: inline;
+}
+
+.actions-cell {
+    min-width: 190px;
+    display: flex;
+    gap: 0.4rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.inline-editor {
+    display: inline-block;
+}
+
+.inline-editor summary {
+    list-style: none;
+}
+
+.inline-editor summary::-webkit-details-marker {
+    display: none;
+}
+
+.editor-box {
+    margin-top: 0.45rem;
+    padding: 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    min-width: 290px;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 18, 24, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1200;
+}
+
+.modal-overlay.is-open {
+    display: flex;
+}
+
+.modal-card {
+    width: min(100%, 780px);
+    max-height: 90vh;
+    overflow: auto;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+}
+
+.modal-card.modal-small {
+    width: min(100%, 520px);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+}
+
+.modal-header h3 {
+    margin: 0;
+}
+
+.modal-close {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
 }
 
 input,

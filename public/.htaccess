@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /S6/projet-iran-news/public/
+
+	# Laisser passer les fichiers et dossiers physiques.
+	RewriteCond %{REQUEST_FILENAME} -f [OR]
+	RewriteCond %{REQUEST_FILENAME} -d
+	RewriteRule ^ - [L]
+
+	# Router toutes les autres requetes vers le front controller.
+	RewriteRule ^ index.php [L,QSA]
+</IfModule>
+
+DirectoryIndex index.php

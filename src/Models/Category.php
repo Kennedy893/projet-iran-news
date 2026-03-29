@@ -45,4 +45,25 @@ class Category
         $stmt->execute([':libelle' => $label]);
         return $stmt->fetch();
     }
+
+    public function create($libelle)
+    {
+        $stmt = $this->db->prepare("INSERT INTO categorie (libelle) VALUES (:libelle)");
+        return $stmt->execute([':libelle' => $libelle]);
+    }
+
+    public function update($id, $libelle)
+    {
+        $stmt = $this->db->prepare("UPDATE categorie SET libelle = :libelle WHERE id = :id");
+        return $stmt->execute([
+            ':id' => (int) $id,
+            ':libelle' => $libelle,
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $stmt = $this->db->prepare("DELETE FROM categorie WHERE id = :id");
+        return $stmt->execute([':id' => (int) $id]);
+    }
 }

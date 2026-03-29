@@ -1,8 +1,18 @@
 <?php
 // Configuration générale
 define('APP_NAME', 'Iran Info');
-define('APP_URL', 'http://localhost:8080');
+// URL racine de l'application (sans slash final).
+$configuredAppUrl = getenv('APP_URL') ?: 'http://localhost/S6/projet-iran-news/public';
+define('APP_URL', rtrim($configuredAppUrl, '/'));
 define('APP_ENV', 'development'); // production / development
+
+if (!function_exists('app_url')) {
+    function app_url($path = '')
+    {
+        $path = ltrim((string) $path, '/');
+        return $path === '' ? APP_URL : APP_URL . '/' . $path;
+    }
+}
 
 // Base de données
 define('DB_HOST', getenv('DB_HOST') ?: 'localhost');

@@ -43,3 +43,5 @@ INSERT INTO categorie (libelle) VALUES
 -- Insertion d'articles de démonstration
 INSERT INTO article (titre, contenu, date_pub, image_url, id_categorie) VALUES
 ('La situation humanitaire à Téhéran', 'Contenu de l\'article...La capitale iranienne fait face à une crise humanitaire sans précédent...', NOW(), null, 1);
+INSERT INTO article (titre, contenu, date_pub, image_url, id_categorie) VALUES
+('La situation humanitaire à Téhéran', 'Contenu de l\'article...La capitale iranienne fait face à une crise humanitaire sans précédent...', NOW(), null, 1);

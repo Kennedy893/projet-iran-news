@@ -55,11 +55,10 @@ class Article
     
     public function create($data)
     {
-        $sql = "INSERT INTO article (id, titre, contenu, date_pub, image_url, id_categorie)
-                VALUES (:id, :titre, :contenu, :date_pub, :image_url, :id_categorie)";
+        $sql = "INSERT INTO article (titre, contenu, date_pub, image_url, id_categorie)
+            VALUES (:titre, :contenu, :date_pub, :image_url, :id_categorie)";
 
         $payload = [
-            ':id' => $data['id'] ?? uniqid('art_', true),
             ':titre' => $data['titre'] ?? ($data['title'] ?? ''),
             ':contenu' => $data['contenu'] ?? ($data['content'] ?? ''),
             ':date_pub' => $data['date_pub'] ?? date('Y-m-d'),

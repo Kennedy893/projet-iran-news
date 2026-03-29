@@ -10,18 +10,23 @@ class MetaManager
         'robots' => 'index, follow',
         'og_title' => 'Iran Info',
         'og_description' => 'Suivez l\'actualité du conflit en Iran',
-        'og_image' => 'https://iraninfo.com/assets/images/default-og-image.jpg',
+        'og_image' => '',
         'og_type' => 'website',
         'twitter_card' => 'summary_large_image',
         'canonical' => ''
     ];
+
+    public function __construct()
+    {
+        $this->meta['og_image'] = app_url('assets/images/default-og-image.jpg');
+    }
     
     public function setHomeMeta()
     {
         $this->meta['title'] = 'Iran Info - Actualités du conflit en Iran';
         $this->meta['description'] = 'Suivez en direct l\'actualité du conflit en Iran : analyses, reportages et informations vérifiées.';
         $this->meta['og_type'] = 'website';
-        $this->meta['canonical'] = 'https://iraninfo.com/';
+        $this->meta['canonical'] = app_url();
     }
     
     public function setArticleMeta($article)
@@ -34,7 +39,7 @@ class MetaManager
         $this->meta['og_image'] = $article['featured_image'] ?? $this->meta['og_image'];
         $this->meta['og_type'] = 'article';
         $this->meta['twitter_card'] = 'summary_large_image';
-        $this->meta['canonical'] = 'https://iraninfo.com/article/' . $article['slug'];
+        $this->meta['canonical'] = app_url('article/' . $article['id']);
     }
     
     public function setCategoryMeta($category)
@@ -42,7 +47,7 @@ class MetaManager
         $this->meta['title'] = $category['name'] . ' - Iran Info';
         $this->meta['description'] = $category['meta_description'] ?? 'Articles sur ' . $category['name'] . ' en Iran';
         $this->meta['keywords'] = $category['name'] . ', Iran, actualités';
-        $this->meta['canonical'] = 'https://iraninfo.com/categorie/' . $category['slug'];
+        $this->meta['canonical'] = app_url('categorie/' . $category['id']);
     }
     
     public function set404Meta()

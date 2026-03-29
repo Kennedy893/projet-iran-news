@@ -7,6 +7,11 @@ $categories = $categories ?? [];
     <section class="home-hero">
         <h1>Iran Info</h1>
         <p>Actualites et analyses sur le conflit en Iran.</p>
+        <p style="margin-top:.75rem;">
+            <a href="<?= htmlspecialchars(app_url('admin/login'), ENT_QUOTES, 'UTF-8') ?>" style="display:inline-block;padding:.5rem .85rem;border:1px solid #ccc;border-radius:6px;text-decoration:none;color:inherit;">
+                Acceder a l'administration
+            </a>
+        </p>
     </section>
 
     <div class="home-grid" style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start;">
@@ -33,7 +38,7 @@ $categories = $categories ?? [];
                         ?>
                         <article class="article-card" style="border:1px solid #ddd;padding:1rem;border-radius:8px;">
                             <?php if (!empty($imageUrl)): ?>
-                                <a href="/article/<?= rawurlencode((string) $articleId) ?>">
+                                <a href="<?= htmlspecialchars(app_url('article/' . rawurlencode((string) $articleId)), ENT_QUOTES, 'UTF-8') ?>">
                                     <img
                                         src="<?= htmlspecialchars((string) $imageUrl, ENT_QUOTES, 'UTF-8') ?>"
                                         alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
@@ -42,7 +47,7 @@ $categories = $categories ?? [];
                             <?php endif; ?>
 
                             <h3 style="margin:.75rem 0 .5rem;">
-                                <a href="/article/<?= rawurlencode((string) $articleId) ?>" style="text-decoration:none;color:inherit;">
+                                <a href="<?= htmlspecialchars(app_url('article/' . rawurlencode((string) $articleId)), ENT_QUOTES, 'UTF-8') ?>" style="text-decoration:none;color:inherit;">
                                     <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>
                                 </a>
                             </h3>
@@ -60,7 +65,7 @@ $categories = $categories ?? [];
                                 <?= htmlspecialchars((string) $excerpt, ENT_QUOTES, 'UTF-8') ?>
                             </p>
 
-                            <a href="/article/<?= rawurlencode((string) $articleId) ?>">Lire l'article</a>
+                            <a href="<?= htmlspecialchars(app_url('article/' . rawurlencode((string) $articleId)), ENT_QUOTES, 'UTF-8') ?>">Lire l'article</a>
                         </article>
                     <?php endforeach; ?>
                 </div>
@@ -81,7 +86,7 @@ $categories = $categories ?? [];
                         $count = isset($category['article_count']) ? (int) $category['article_count'] : null;
                         ?>
                         <li>
-                            <a href="/categorie/<?= rawurlencode((string) $categoryId) ?>">
+                            <a href="<?= htmlspecialchars(app_url('categorie/' . rawurlencode((string) $categoryId)), ENT_QUOTES, 'UTF-8') ?>">
                                 <?= htmlspecialchars((string) $categoryLabel, ENT_QUOTES, 'UTF-8') ?>
                             </a>
                             <?php if ($count !== null): ?>

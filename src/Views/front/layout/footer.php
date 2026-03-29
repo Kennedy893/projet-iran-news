@@ -2,13 +2,13 @@
     <div class="container" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;">
         <p style="margin:0;">&copy; <?= date('Y') ?> Iran Info. Tous droits reserves.</p>
         <nav aria-label="Liens utiles" style="display:flex;gap:1rem;">
-            <a href="/">Accueil</a>
-            <a href="/search">Recherche</a>
-            <a href="/sitemap.php">Plan du site</a>
+            <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>">Accueil</a>
+            <a href="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>">Recherche</a>
+            <a href="<?= htmlspecialchars(app_url('sitemap.php'), ENT_QUOTES, 'UTF-8') ?>">Plan du site</a>
         </nav>
     </div>
 </footer>
 
-<script src="/assets/js/main.js" defer></script>
+<script src="<?= htmlspecialchars(app_url('assets/js/main.js'), ENT_QUOTES, 'UTF-8') ?>" defer></script>
 </body>
 </html>

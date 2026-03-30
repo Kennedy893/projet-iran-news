@@ -35,7 +35,7 @@ class MetaManager
         $rawContent = (string) ($article['excerpt'] ?? ($article['contenu'] ?? ''));
         $description = mb_substr(trim(strip_tags($rawContent)), 0, 155);
         $categoryName = (string) ($article['categorie_libelle'] ?? ($article['category_name'] ?? 'Actualités'));
-        $identifier = (string) ($article['slug'] ?? ($article['id'] ?? ''));
+        $articleId = (int) ($article['id'] ?? 0);
 
         $this->meta['title'] = $title . ' | Iran Info';
         $this->meta['description'] = $description !== '' ? $description : 'Article d\'actualité sur le conflit en Iran.';
@@ -45,18 +45,18 @@ class MetaManager
         $this->meta['og_image'] = $article['image_url'] ?? ($article['featured_image'] ?? $this->meta['og_image']);
         $this->meta['og_type'] = 'article';
         $this->meta['twitter_card'] = 'summary_large_image';
-        $this->meta['canonical'] = $identifier !== '' ? app_url('article/' . rawurlencode($identifier)) : app_url();
+        $this->meta['canonical'] = $articleId > 0 ? article_url($articleId, $title) : app_url();
     }
     
     public function setCategoryMeta($category)
     {
         $name = (string) ($category['libelle'] ?? ($category['name'] ?? 'Catégorie'));
-        $identifier = (string) ($category['slug'] ?? ($category['id'] ?? ''));
+        $categoryId = (int) ($category['id'] ?? 0);
 
         $this->meta['title'] = $name . ' - Iran Info';
         $this->meta['description'] = $category['meta_description'] ?? ('Articles sur ' . $name . ' en Iran');
         $this->meta['keywords'] = $name . ', Iran, actualités';
-        $this->meta['canonical'] = $identifier !== '' ? app_url('categorie/' . rawurlencode($identifier)) : app_url();
+        $this->meta['canonical'] = $categoryId > 0 ? category_url($categoryId, $name) : app_url();
     }
     
     public function set404Meta()

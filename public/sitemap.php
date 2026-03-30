@@ -28,8 +28,14 @@ echo '</url>';
 
 // Catégories
 foreach($categories as $cat) {
+    $categoryId = (int) ($cat['id'] ?? 0);
+    $categoryName = (string) ($cat['libelle'] ?? ($cat['name'] ?? 'categorie'));
+    if ($categoryId <= 0) {
+        continue;
+    }
+
     echo '<url>';
-    echo '<loc>' . APP_URL . '/categorie/' . $cat['slug'] . '</loc>';
+    echo '<loc>' . htmlspecialchars(category_url($categoryId, $categoryName), ENT_QUOTES, 'UTF-8') . '</loc>';
     echo '<changefreq>weekly</changefreq>';
     echo '<priority>0.8</priority>';
     echo '</url>';
@@ -37,9 +43,17 @@ foreach($categories as $cat) {
 
 // Articles
 foreach($articles as $article) {
+    $articleId = (int) ($article['id'] ?? 0);
+    $articleTitle = (string) ($article['titre'] ?? ($article['title'] ?? 'article'));
+    if ($articleId <= 0) {
+        continue;
+    }
+
+    $lastmodSource = $article['date_pub'] ?? date('Y-m-d');
+
     echo '<url>';
-    echo '<loc>' . APP_URL . '/article/' . $article['slug'] . '</loc>';
-    echo '<lastmod>' . date('Y-m-d', strtotime($article['updated_at'])) . '</lastmod>';
+    echo '<loc>' . htmlspecialchars(article_url($articleId, $articleTitle), ENT_QUOTES, 'UTF-8') . '</loc>';
+    echo '<lastmod>' . date('Y-m-d', strtotime((string) $lastmodSource)) . '</lastmod>';
     echo '<changefreq>monthly</changefreq>';
     echo '<priority>0.6</priority>';
     echo '</url>';

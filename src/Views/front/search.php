@@ -90,7 +90,7 @@ $totalResults = count($results);
                         $excerpt = preg_replace('/(' . preg_quote($query, '/') . ')/i', '<mark style="background-color:var(--color-accent-light);padding:2px 4px;border-radius:2px;">$1</mark>', $excerpt);
                     }
                     
-                    $articleUrl = app_url('article/' . rawurlencode((string) $articleId));
+                    $articleUrl = article_url($articleId, $title);
                     ?>
                     
                     <article class="article-card">

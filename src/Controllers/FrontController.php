@@ -36,7 +36,8 @@ class FrontController
     
     public function showArticle($params)
     {
-        $id = $params['id'] ?? ($params['slug'] ?? null);
+        $idParam = $params['id'] ?? ($params['slug'] ?? null);
+        $id = $this->extractIdFromRouteValue($idParam);
         
         if (!$id) {
             $this->notFound();
@@ -73,7 +74,8 @@ class FrontController
             return;
         }
         
-        $category = $this->findCategory($identifier);
+        $idFromRoute = $this->extractIdFromRouteValue($identifier);
+        $category = $idFromRoute !== null ? $this->findCategory((string) $idFromRoute) : $this->findCategory($identifier);
         
         if (!$category) {
             $this->notFound();
@@ -173,8 +175,26 @@ class FrontController
                 WHERE a.id = :id";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([':id' => $id]);
+        $stmt->execute([':id' => (int) $id]);
         return $stmt->fetch();
+    }
+
+    private function extractIdFromRouteValue($value)
+    {
+        $value = trim((string) $value);
+        if ($value === '') {
+            return null;
+        }
+
+        if (ctype_digit($value)) {
+            return (int) $value;
+        }
+
+        if (preg_match('/^(\d+)(?:-[a-z0-9-]+)?$/i', $value, $matches)) {
+            return (int) $matches[1];
+        }
+
+        return null;
     }
 
     private function getRelatedArticles($categoryId, $currentId, $limit = 3)

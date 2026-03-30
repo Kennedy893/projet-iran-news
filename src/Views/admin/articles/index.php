@@ -9,10 +9,10 @@ $categories = $categories ?? [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des articles | Admin</title>
-    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/variables.css'), ENT_QUOTES, 'UTF-8') ?>">
-    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8') ?>">
-    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/responsive.css'), ENT_QUOTES, 'UTF-8') ?>">
-    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/admin-dashboard.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/variables.min.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/style.min.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/responsive.min.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/admin-dashboard.min.css'), ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body>
     <header class="site-header admin-site-header" role="banner">
@@ -94,7 +94,7 @@ $categories = $categories ?? [];
                                 ?>
                                 <div class="image-item image-item-primary">
                                     <button type="button" class="image-thumb-btn js-open-lightbox" data-image-src="<?= htmlspecialchars($primaryUrl, ENT_QUOTES, 'UTF-8') ?>">
-                                        <img src="<?= htmlspecialchars($primaryUrl, ENT_QUOTES, 'UTF-8') ?>" alt="Image primaire" class="image-thumb">
+                                        <img src="<?= htmlspecialchars($primaryUrl, ENT_QUOTES, 'UTF-8') ?>" alt="Image primaire" class="image-thumb" width="320" height="180">
                                     </button>
                                     <div class="image-meta">
                                         <span class="tag">Primaire</span>
@@ -113,7 +113,7 @@ $categories = $categories ?? [];
                                     ?>
                                     <div class="image-item">
                                         <button type="button" class="image-thumb-btn js-open-lightbox" data-image-src="<?= htmlspecialchars($secondaryUrl, ENT_QUOTES, 'UTF-8') ?>">
-                                            <img src="<?= htmlspecialchars($secondaryUrl, ENT_QUOTES, 'UTF-8') ?>" alt="Image secondaire" class="image-thumb">
+                                            <img src="<?= htmlspecialchars($secondaryUrl, ENT_QUOTES, 'UTF-8') ?>" alt="Image secondaire" class="image-thumb" width="320" height="180">
                                         </button>
                                         <div class="image-meta">
                                             <span class="tag">Secondaire</span>
@@ -230,11 +230,11 @@ $categories = $categories ?? [];
             <button type="button" class="btn modal-close" data-close-modal>&times;</button>
         </div>
         <div class="lightbox-content">
-            <img id="lightbox-image" src="" alt="Agrandissement image" class="lightbox-image">
+            <img id="lightbox-image" src="" alt="Agrandissement image" class="lightbox-image" width="1200" height="675">
         </div>
     </div>
 </div>
 
-<script src="<?= htmlspecialchars(app_url('assets/js/admin-crud-modal.js'), ENT_QUOTES, 'UTF-8') ?>" defer></script>
+<script src="<?= htmlspecialchars(app_url('assets/js/admin-crud-modal.min.js'), ENT_QUOTES, 'UTF-8') ?>" defer></script>
 </body>
 </html>

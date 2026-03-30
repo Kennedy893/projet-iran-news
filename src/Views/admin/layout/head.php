@@ -35,12 +35,12 @@
     <link rel="alternate" type="application/rss+xml" title="Iran Info RSS" href="<?= htmlspecialchars(app_url('rss.xml'), ENT_QUOTES, 'UTF-8') ?>">
     
     <!-- Preload critical assets -->
-    <link rel="preload" href="<?= htmlspecialchars(app_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8') ?>" as="style">
-    <link rel="preload" href="<?= htmlspecialchars(app_url('assets/js/main.js'), ENT_QUOTES, 'UTF-8') ?>" as="script">
+    <link rel="preload" href="<?= htmlspecialchars(app_url('assets/css/style.min.css'), ENT_QUOTES, 'UTF-8') ?>" as="style">
+    <link rel="preload" href="<?= htmlspecialchars(app_url('assets/js/main.min.js'), ENT_QUOTES, 'UTF-8') ?>" as="script">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8') ?>">
-    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/responsive.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/style.min.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/responsive.min.css'), ENT_QUOTES, 'UTF-8') ?>">
     
     <!-- Structured Data / JSON-LD -->
     <script type="application/ld+json">

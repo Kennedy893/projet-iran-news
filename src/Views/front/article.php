@@ -109,6 +109,8 @@
                     data-zoom-src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
                     class="js-zoomable-image"
                     alt="<?= generateAlt($title) ?>"
+                    width="1200"
+                    height="675"
                     style="width:auto;max-width:100%;height:auto;max-height:500px;object-fit:contain;border-radius:var(--border-radius-md);margin-inline:auto;">
             </figure>
         <?php endif; ?>
@@ -138,6 +140,8 @@
                                 data-zoom-src="<?= htmlspecialchars($secondarySrc, ENT_QUOTES, 'UTF-8') ?>"
                                 class="js-zoomable-image"
                                 alt="<?= generateAlt($title, $index) ?>"
+                                width="800"
+                                height="600"
                                 loading="lazy"
                                 style="width:auto;max-width:100%;height:auto;max-height:220px;object-fit:contain;margin-inline:auto;border-radius:var(--border-radius-sm);">
                             <figcaption style="margin-top:var(--spacing-xs);font-size:var(--font-size-xs);color:var(--color-text-tertiary);text-align:center;">
@@ -197,6 +201,8 @@
                                      data-zoom-src="<?= htmlspecialchars(image_url((string) $relatedImage), ENT_QUOTES, 'UTF-8') ?>"
                                      class="js-zoomable-image"
                                      alt="<?= htmlspecialchars((string) $relatedTitle, ENT_QUOTES, 'UTF-8') ?>"
+                                      width="1200"
+                                      height="675"
                                      loading="lazy">
                             </a>
                         <?php endif; ?>

@@ -62,6 +62,8 @@ $categories = $categories ?? [];
                                         src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
                                         class="js-zoomable-image"
                                         alt="Image illustrant <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?> - actualité sur le conflit en Iran"                          
+                                        width="1200"
+                                        height="675"
                                         loading="lazy">
                                 </a>
                             <?php endif; ?>

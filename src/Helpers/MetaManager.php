@@ -32,28 +32,31 @@ class MetaManager
     public function setArticleMeta($article)
     {
         $title = (string) ($article['titre'] ?? ($article['title'] ?? 'Article'));
-        $content = (string) ($article['contenu'] ?? ($article['excerpt'] ?? ''));
-        $description = substr(strip_tags($content), 0, 155);
+        $rawContent = (string) ($article['excerpt'] ?? ($article['contenu'] ?? ''));
+        $description = mb_substr(trim(strip_tags($rawContent)), 0, 155);
+        $categoryName = (string) ($article['categorie_libelle'] ?? ($article['category_name'] ?? 'Actualités'));
+        $identifier = (string) ($article['slug'] ?? ($article['id'] ?? ''));
 
         $this->meta['title'] = $title . ' | Iran Info';
-        $this->meta['description'] = $description;
-        $this->meta['keywords'] = ($article['category_name'] ?? 'Iran') . ', Iran, actualités, guerre';
+        $this->meta['description'] = $description !== '' ? $description : 'Article d\'actualité sur le conflit en Iran.';
+        $this->meta['keywords'] = $categoryName . ', Iran, actualités, guerre';
         $this->meta['og_title'] = $title;
-        $this->meta['og_description'] = $description;
-        $this->meta['og_image'] = !empty($article['image_url'])
-            ? app_url(ltrim((string) $article['image_url'], '/'))
-            : $this->meta['og_image'];
+        $this->meta['og_description'] = $this->meta['description'];
+        $this->meta['og_image'] = $article['image_url'] ?? ($article['featured_image'] ?? $this->meta['og_image']);
         $this->meta['og_type'] = 'article';
         $this->meta['twitter_card'] = 'summary_large_image';
-        $this->meta['canonical'] = app_url('article/' . $article['id']);
+        $this->meta['canonical'] = $identifier !== '' ? app_url('article/' . rawurlencode($identifier)) : app_url();
     }
     
     public function setCategoryMeta($category)
     {
-        $this->meta['title'] = $category['name'] . ' - Iran Info';
-        $this->meta['description'] = $category['meta_description'] ?? 'Articles sur ' . $category['name'] . ' en Iran';
-        $this->meta['keywords'] = $category['name'] . ', Iran, actualités';
-        $this->meta['canonical'] = app_url('categorie/' . $category['id']);
+        $name = (string) ($category['libelle'] ?? ($category['name'] ?? 'Catégorie'));
+        $identifier = (string) ($category['slug'] ?? ($category['id'] ?? ''));
+
+        $this->meta['title'] = $name . ' - Iran Info';
+        $this->meta['description'] = $category['meta_description'] ?? ('Articles sur ' . $name . ' en Iran');
+        $this->meta['keywords'] = $name . ', Iran, actualités';
+        $this->meta['canonical'] = $identifier !== '' ? app_url('categorie/' . rawurlencode($identifier)) : app_url();
     }
     
     public function set404Meta()

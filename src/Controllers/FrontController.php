@@ -106,9 +106,9 @@ class FrontController
         $query = $_GET['q'] ?? '';
         
         if (strlen($query) < 3) {
-            $articles = [];
+            $results = [];
         } else {
-            $articles = $this->searchArticles($query);
+            $results = $this->searchArticles($query);
         }
         
         $this->metaManager->setSearchMeta($query);
@@ -256,11 +256,15 @@ class FrontController
                        ) AS image_url
                 FROM article a
                 LEFT JOIN categorie c ON a.id_categorie = c.id
-                WHERE a.titre LIKE :query OR a.contenu LIKE :query
+                WHERE a.titre LIKE :query_title OR a.contenu LIKE :query_content
                 ORDER BY a.date_pub DESC";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([':query' => '%' . $query . '%']);
+        $like = '%' . $query . '%';
+        $stmt->execute([
+            ':query_title' => $like,
+            ':query_content' => $like,
+        ]);
         return $stmt->fetchAll();
     }
 }

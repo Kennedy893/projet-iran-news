@@ -7,8 +7,7 @@
 	RewriteCond %{REQUEST_FILENAME} -d
 	RewriteRule ^ - [L]
 
-	# Router toutes les autres requetes vers le front controller.
+	# Route all other requests to the front controller.
 	RewriteRule ^ index.php [L,QSA]
 </IfModule>
 
-DirectoryIndex index.php

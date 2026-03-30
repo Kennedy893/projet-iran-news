@@ -232,7 +232,7 @@ class Article
 
     public function setPrimaryImage($articleId, $path)
     {
-        $existing = $this->getPrimaryImagePath($articleId);
+        $existing = $this->getPrimaryImage($articleId);
 
         if ($existing !== null) {
             $stmt = $this->db->prepare("UPDATE image SET chemin = :chemin WHERE id_article = :id_article AND type_image = :type_image");

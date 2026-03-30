@@ -1,0 +1,68 @@
+/**
+ * IRAN INFO - Variables CSS
+ * Design institutionnel et académique
+ */
+
+:root {
+  /* Couleurs principales */
+  --color-primary: #1a3a52;
+  --color-primary-light: #2c5470;
+  --color-primary-dark: #0f2438;
+  --color-secondary: #5b6770;
+  --color-accent: #c44536;
+  --color-accent-light: #d4635a;
+  
+  /* Couleurs neutres */
+  --color-background: #fafbfc;
+  --color-surface: #ffffff;
+  --color-border: #dde1e6;
+  --color-border-light: #e8ebed;
+  
+  /* Texte */
+  --color-text-primary: #1c1e21;
+  --color-text-secondary: #4a5058;
+  --color-text-tertiary: #6b7178;
+  --color-text-muted: #8a9099;
+  
+  /* Typographie */
+  --font-serif: 'Georgia', 'Times New Roman', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Tailles de police */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 1.875rem;
+  --font-size-3xl: 2.25rem;
+  --font-size-4xl: 3rem;
+  
+  /* Espacements */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  
+  /* Dimensions */
+  --container-max-width: 1200px;
+  --header-height: 70px;
+  
+  /* Bordures */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  
+  /* Ombres */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+}

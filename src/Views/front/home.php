@@ -3,26 +3,31 @@ $articles = $articles ?? [];
 $categories = $categories ?? [];
 ?>
 
-<main class="container" role="main">
-    <section class="home-hero">
-        <h1>Iran Info</h1>
-        <p>Actualites et analyses sur le conflit en Iran.</p>
+<main id="main-content" class="container" role="main">
+    <!-- Hero Section -->
+    <section class="home-hero" aria-labelledby="site-title">
+        <h1 id="site-title">Iran Info</h1>
+        <p>Actualités et analyses sur le conflit en Iran. Information objective, vérifiée et contextualisée.</p>
     </section>
 
-    <div class="home-grid" style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start;">
+    <!-- Grille principale -->
+    <div class="home-grid">
+        <!-- Section Articles -->
         <section aria-labelledby="recent-articles-title">
             <h2 id="recent-articles-title">Derniers articles</h2>
 
             <?php if (empty($articles)): ?>
-                <p>Aucun article disponible pour le moment.</p>
+                <div class="empty-state" style="padding:var(--spacing-2xl);text-align:center;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--border-radius-md);">
+                    <p style="color:var(--color-text-secondary);margin:0;">Aucun article disponible pour le moment.</p>
+                </div>
             <?php else: ?>
-                <div class="articles-list" style="display:grid;gap:1.25rem;">
+                <div class="articles-list">
                     <?php foreach ($articles as $article): ?>
                         <?php
                         $articleId = $article['id'] ?? '';
                         $title = $article['titre'] ?? '';
                         $content = $article['contenu'] ?? '';
-                        $categoryName = $article['categorie_libelle'] ?? ($article['category_name'] ?? 'General');
+                        $categoryName = $article['categorie_libelle'] ?? ($article['category_name'] ?? 'Général');
                         $publishedAt = $article['date_pub'] ?? null;
                         $imageUrl = $article['image_url'] ?? '';
 
@@ -30,50 +35,63 @@ $categories = $categories ?? [];
                         if (mb_strlen(trim(strip_tags((string) $content))) > 180) {
                             $excerpt .= '...';
                         }
+                        
+                        $articleUrl = '/article/' . rawurlencode((string) $articleId);
+                        $categoryUrl = isset($article['id_categorie']) ? '/categorie/' . rawurlencode((string) $article['id_categorie']) : '#';
                         ?>
-                        <article class="article-card" style="border:1px solid #ddd;padding:1rem;border-radius:8px;">
+                        
+                        <article class="article-card">
                             <?php if (!empty($imageUrl)): ?>
-                                <a href="/article/<?= rawurlencode((string) $articleId) ?>">
+                                <a href="<?= $articleUrl ?>" aria-label="Lire l'article: <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>">
                                     <img
                                         src="<?= htmlspecialchars((string) $imageUrl, ENT_QUOTES, 'UTF-8') ?>"
                                         alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
-                                        style="width:100%;height:auto;border-radius:6px;">
+                                        loading="lazy">
                                 </a>
                             <?php endif; ?>
 
-                            <h3 style="margin:.75rem 0 .5rem;">
-                                <a href="/article/<?= rawurlencode((string) $articleId) ?>" style="text-decoration:none;color:inherit;">
+                            <h3>
+                                <a href="<?= $articleUrl ?>">
                                     <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>
                                 </a>
                             </h3>
 
-                            <p style="margin:0 0 .5rem;color:#555;">
-                                <strong>Categorie:</strong> <?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?>
+                            <div class="article-meta">
+                                <span>
+                                    <strong>Catégorie:</strong> 
+                                    <a href="<?= $categoryUrl ?>">
+                                        <?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?>
+                                    </a>
+                                </span>
                                 <?php if (!empty($publishedAt)): ?>
-                                    | <time datetime="<?= htmlspecialchars((string) $publishedAt, ENT_QUOTES, 'UTF-8') ?>">
+                                    <time datetime="<?= htmlspecialchars((string) $publishedAt, ENT_QUOTES, 'UTF-8') ?>">
                                         <?= htmlspecialchars((string) date('d/m/Y', strtotime((string) $publishedAt)), ENT_QUOTES, 'UTF-8') ?>
                                     </time>
                                 <?php endif; ?>
-                            </p>
+                            </div>
 
-                            <p style="margin:0 0 .75rem;">
+                            <p class="article-excerpt">
                                 <?= htmlspecialchars((string) $excerpt, ENT_QUOTES, 'UTF-8') ?>
                             </p>
 
-                            <a href="/article/<?= rawurlencode((string) $articleId) ?>">Lire l'article</a>
+                            <a href="<?= $articleUrl ?>" class="read-more">
+                                Lire l'article 
+                                <span aria-hidden="true">→</span>
+                            </a>
                         </article>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
         </section>
 
+        <!-- Sidebar Catégories -->
         <aside aria-labelledby="categories-title">
-            <h2 id="categories-title">Categories</h2>
+            <h2 id="categories-title">Catégories</h2>
 
             <?php if (empty($categories)): ?>
-                <p>Aucune categorie disponible.</p>
+                <p style="color:var(--color-text-secondary);">Aucune catégorie disponible.</p>
             <?php else: ?>
-                <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.5rem;">
+                <ul>
                     <?php foreach ($categories as $category): ?>
                         <?php
                         $categoryId = $category['id'] ?? '';
@@ -83,10 +101,10 @@ $categories = $categories ?? [];
                         <li>
                             <a href="/categorie/<?= rawurlencode((string) $categoryId) ?>">
                                 <?= htmlspecialchars((string) $categoryLabel, ENT_QUOTES, 'UTF-8') ?>
+                                <?php if ($count !== null): ?>
+                                    <span>(<?= $count ?>)</span>
+                                <?php endif; ?>
                             </a>
-                            <?php if ($count !== null): ?>
-                                <span style="color:#666;">(<?= $count ?>)</span>
-                            <?php endif; ?>
                         </li>
                     <?php endforeach; ?>
                 </ul>

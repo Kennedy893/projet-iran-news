@@ -7,11 +7,6 @@ $categories = $categories ?? [];
     <section class="home-hero">
         <h1>Iran Info</h1>
         <p>Actualites et analyses sur le conflit en Iran.</p>
-        <p style="margin-top:.75rem;">
-            <a href="<?= htmlspecialchars(app_url('admin/login'), ENT_QUOTES, 'UTF-8') ?>" style="display:inline-block;padding:.5rem .85rem;border:1px solid #ccc;border-radius:6px;text-decoration:none;color:inherit;">
-                Acceder a l'administration
-            </a>
-        </p>
     </section>
 
     <div class="home-grid" style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start;">

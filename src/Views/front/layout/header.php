@@ -49,6 +49,7 @@ $canonical = $meta['canonical'] ?? '';
         <nav aria-label="Navigation principale" style="display:flex;gap:1rem;">
             <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>">Accueil</a>
             <a href="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>">Recherche</a>
+            <a href="<?= htmlspecialchars(app_url('admin/login'), ENT_QUOTES, 'UTF-8') ?>">Page d'admin</a>
         </nav>
     </div>
 </header>

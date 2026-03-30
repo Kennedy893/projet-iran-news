@@ -52,6 +52,7 @@ class FrontController
         
         // Récupérer les articles similaires
         $related = $this->getRelatedArticles($article['id_categorie'], $article['id']);
+        $secondaryImages = $this->getSecondaryImages((int) $article['id']);
         
         // Configuration SEO
         $this->metaManager->setArticleMeta($article);
@@ -201,6 +202,13 @@ class FrontController
         $stmt->bindValue(':current_id', (string) $currentId);
         $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
         $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    private function getSecondaryImages($articleId)
+    {
+        $stmt = $this->db->prepare("SELECT id, chemin FROM image WHERE id_article = :id_article AND type_image = 2 ORDER BY id ASC");
+        $stmt->execute([':id_article' => (int) $articleId]);
         return $stmt->fetchAll();
     }
 

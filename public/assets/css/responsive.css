@@ -78,7 +78,7 @@
   }
   
   .article-card img {
-    height: 200px;
+    max-height: 300px;
   }
   
   /* Footer mobile */
@@ -101,7 +101,7 @@
   }
   
   .article-card img {
-    height: 180px;
+    max-height: 240px;
   }
   
   .home-hero {

@@ -98,6 +98,8 @@ $totalResults = count($results);
                             <a href="<?= $articleUrl ?>">
                                 <img
                                     src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
+                                    data-zoom-src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
+                                    class="js-zoomable-image"
                                     alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
                                     loading="lazy">
                             </a>

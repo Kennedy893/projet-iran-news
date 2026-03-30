@@ -1,6 +1,7 @@
 <?php
 $article = $article ?? null;
 $relatedArticles = $relatedArticles ?? [];
+$secondaryImages = $secondaryImages ?? [];
 
 if (!$article) {
     header('HTTP/1.0 404 Not Found');
@@ -60,8 +61,10 @@ $articleId = $article['id'] ?? '';
             <figure class="article-image" style="margin:0 0 var(--spacing-xl) 0;">
                 <img
                     src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
+                    data-zoom-src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
+                    class="js-zoomable-image"
                     alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
-                    style="width:100%;height:auto;max-height:500px;object-fit:cover;border-radius:var(--border-radius-md);">
+                    style="width:auto;max-width:100%;height:auto;max-height:500px;object-fit:contain;border-radius:var(--border-radius-md);margin-inline:auto;">
             </figure>
         <?php endif; ?>
 
@@ -69,6 +72,37 @@ $articleId = $article['id'] ?? '';
         <div class="article-content" style="font-family:var(--font-serif);font-size:var(--font-size-md);line-height:1.8;color:var(--color-text-primary);">
             <?= nl2br(htmlspecialchars((string) $content, ENT_QUOTES, 'UTF-8')) ?>
         </div>
+
+        <?php if (!empty($secondaryImages)): ?>
+            <section class="article-secondary-media" aria-label="Galerie photo" style="margin-top:var(--spacing-2xl);padding-top:var(--spacing-xl);border-top:1px solid var(--color-border);">
+                <h2 style="font-size:var(--font-size-xl);margin-bottom:var(--spacing-xs);">En images</h2>
+                <p style="margin:0 0 var(--spacing-md) 0;color:var(--color-text-tertiary);font-size:var(--font-size-sm);">Documents visuels liés à l'article. Cliquez sur une image pour l'agrandir.</p>
+                <div class="article-secondary-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--spacing-md);">
+                    <?php foreach ($secondaryImages as $index => $media): ?>
+                        <?php
+                        $secondaryPath = (string) ($media['chemin'] ?? '');
+                        if ($secondaryPath === '') {
+                            continue;
+                        }
+                        $secondarySrc = image_url($secondaryPath);
+                        $legend = 'Photo ' . ((int) $index + 1) . ' - ' . $title;
+                        ?>
+                        <figure class="article-secondary-item" style="margin:0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--border-radius-sm);padding:var(--spacing-sm);box-shadow:var(--shadow-sm);">
+                            <img
+                                src="<?= htmlspecialchars($secondarySrc, ENT_QUOTES, 'UTF-8') ?>"
+                                data-zoom-src="<?= htmlspecialchars($secondarySrc, ENT_QUOTES, 'UTF-8') ?>"
+                                class="js-zoomable-image"
+                                alt="<?= htmlspecialchars($legend, ENT_QUOTES, 'UTF-8') ?>"
+                                loading="lazy"
+                                style="width:auto;max-width:100%;height:auto;max-height:220px;object-fit:contain;margin-inline:auto;border-radius:var(--border-radius-sm);">
+                            <figcaption style="margin-top:var(--spacing-xs);font-size:var(--font-size-xs);color:var(--color-text-tertiary);text-align:center;">
+                                <?= htmlspecialchars($legend, ENT_QUOTES, 'UTF-8') ?>
+                            </figcaption>
+                        </figure>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+        <?php endif; ?>
 
         <!-- Partage social -->
         <footer class="article-footer" style="margin-top:var(--spacing-2xl);padding-top:var(--spacing-xl);border-top:1px solid var(--color-border);">
@@ -115,6 +149,8 @@ $articleId = $article['id'] ?? '';
                         <?php if (!empty($relatedImage)): ?>
                             <a href="<?= htmlspecialchars((string) $relatedUrl, ENT_QUOTES, 'UTF-8') ?>">
                                 <img src="<?= htmlspecialchars(image_url((string) $relatedImage), ENT_QUOTES, 'UTF-8') ?>"
+                                     data-zoom-src="<?= htmlspecialchars(image_url((string) $relatedImage), ENT_QUOTES, 'UTF-8') ?>"
+                                     class="js-zoomable-image"
                                      alt="<?= htmlspecialchars((string) $relatedTitle, ENT_QUOTES, 'UTF-8') ?>"
                                      loading="lazy">
                             </a>

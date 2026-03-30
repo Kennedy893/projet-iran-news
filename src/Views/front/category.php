@@ -53,7 +53,7 @@ $categoryId = $category['id'] ?? '';
                         $excerpt .= '...';
                     }
                     
-                    $articleUrl = app_url('article/' . rawurlencode((string) $articleId));
+                    $articleUrl = article_url($articleId, $title);
                     ?>
                     
                     <article class="article-card">

@@ -69,7 +69,7 @@
         <ol style="list-style:none;padding:0;margin:0;display:flex;gap:var(--spacing-xs);flex-wrap:wrap;">
             <li><a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" rel="noopener">Accueil</a></li>
             <li aria-hidden="true" style="color:var(--color-text-muted);">/</li>
-            <li><a href="<?= htmlspecialchars(app_url('categorie/' . rawurlencode((string) $categoryId)), ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?></a></li>
+            <li><a href="<?= htmlspecialchars(category_url((int) $categoryId, $categoryName), ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?></a></li>
             <li aria-hidden="true" style="color:var(--color-text-muted);">/</li>
             <li aria-current="page" style="color:var(--color-text-secondary);"><?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?></li>
         </ol>
@@ -86,7 +86,7 @@
             <div class="article-meta" style="display:flex;gap:var(--spacing-md);flex-wrap:wrap;font-size:var(--font-size-sm);color:var(--color-text-tertiary);">
                 <span>
                     <strong style="color:var(--color-text-secondary);">Catégorie:</strong>
-                    <a href="<?= htmlspecialchars(app_url('categorie/' . rawurlencode((string) $categoryId)), ENT_QUOTES, 'UTF-8') ?>" style="color:var(--color-primary);">
+                    <a href="<?= htmlspecialchars(category_url((int) $categoryId, $categoryName), ENT_QUOTES, 'UTF-8') ?>" style="color:var(--color-primary);">
                         <?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?>
                     </a>
                 </span>
@@ -188,7 +188,7 @@
                     $relatedId = $related['id'] ?? '';
                     $relatedTitle = $related['titre'] ?? '';
                     $relatedImage = $related['image_url'] ?? '';
-                    $relatedUrl = app_url('article/' . rawurlencode((string) $relatedId));
+                    $relatedUrl = article_url($relatedId, $relatedTitle);
                     ?>
                     <article class="article-card">
                         <?php if (!empty($relatedImage)): ?>

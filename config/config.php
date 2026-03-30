@@ -14,6 +14,58 @@ if (!function_exists('app_url')) {
     }
 }
 
+if (!function_exists('slugify')) {
+    function slugify($text)
+    {
+        $text = trim((string) $text);
+        if ($text === '') {
+            return '';
+        }
+
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        if (function_exists('iconv')) {
+            $converted = @iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $text);
+            if ($converted !== false) {
+                $text = $converted;
+            }
+        }
+
+        $text = strtolower($text);
+        $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+        $text = trim((string) $text, '-');
+
+        return $text;
+    }
+}
+
+if (!function_exists('article_url')) {
+    function article_url($id, $title = '')
+    {
+        $id = (int) $id;
+        if ($id <= 0) {
+            return app_url();
+        }
+
+        $slug = slugify($title);
+        $segment = $id . ($slug !== '' ? '-' . $slug : '');
+        return app_url('article/' . rawurlencode($segment));
+    }
+}
+
+if (!function_exists('category_url')) {
+    function category_url($id, $label = '')
+    {
+        $id = (int) $id;
+        if ($id <= 0) {
+            return app_url();
+        }
+
+        $slug = slugify($label);
+        $segment = $id . ($slug !== '' ? '-' . $slug : '');
+        return app_url('categorie/' . rawurlencode($segment));
+    }
+}
+
 if (!function_exists('image_url')) {
     function image_url($path = '', $fallback = 'assets/images/default-og-image.jpg')
     {

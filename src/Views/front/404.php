@@ -42,7 +42,7 @@ http_response_code(404);
                         $articleId = $article['id'] ?? '';
                         $title = $article['titre'] ?? '';
                         $imageUrl = $article['image_url'] ?? '';
-                        $articleUrl = app_url('article/' . rawurlencode((string) $articleId));
+                        $articleUrl = article_url($articleId, $title);
                         ?>
                         <article class="article-card">
                             <?php if (!empty($imageUrl)): ?>

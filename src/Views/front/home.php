@@ -46,8 +46,8 @@ $categories = $categories ?? [];
                             $excerpt .= '...';
                         }
 
-                        $articleUrl = app_url('article/' . rawurlencode((string) $articleId));
-                        $categoryUrl = isset($article['id_categorie']) ? app_url('categorie/' . rawurlencode((string) $article['id_categorie'])) : '#';
+                        $articleUrl = article_url($articleId, $title);
+                        $categoryUrl = isset($article['id_categorie']) ? category_url((int) $article['id_categorie'], $categoryName) : '#';
                         ?>
                         
                         <article class="article-card">
@@ -134,7 +134,7 @@ $categories = $categories ?? [];
                         $count = isset($category['article_count']) ? (int) $category['article_count'] : null;
                         ?>
                         <li>
-                            <a href="<?= htmlspecialchars(app_url('categorie/' . rawurlencode((string) $categoryId)), ENT_QUOTES, 'UTF-8') ?>">
+                            <a href="<?= htmlspecialchars(category_url((int) $categoryId, $categoryLabel), ENT_QUOTES, 'UTF-8') ?>">
                                 <?= htmlspecialchars((string) $categoryLabel, ENT_QUOTES, 'UTF-8') ?>
                                 <?php if ($count !== null): ?>
                                     <span>(<?= $count ?>)</span>

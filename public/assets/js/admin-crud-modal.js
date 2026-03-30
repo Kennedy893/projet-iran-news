@@ -54,6 +54,17 @@ document.addEventListener('DOMContentLoaded', function () {
         var contentInput = document.getElementById('article-edit-contenu');
         var dateInput = document.getElementById('article-edit-date');
         var categorySelect = document.getElementById('article-edit-categorie');
+        var primaryPreview = document.getElementById('article-edit-primary-preview');
+        var secondaryPreview = document.getElementById('article-edit-secondary-preview');
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
 
         openArticleButtons.forEach(function (button) {
             button.addEventListener('click', function () {
@@ -63,6 +74,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 contentInput.value = button.getAttribute('data-contenu') || '';
                 dateInput.value = button.getAttribute('data-date') || '';
                 categorySelect.value = button.getAttribute('data-categorie') || '';
+
+                var primaryImage = button.getAttribute('data-primary-image') || '';
+                if (primaryPreview) {
+                    if (primaryImage) {
+                        primaryPreview.classList.remove('text-muted');
+                        primaryPreview.innerHTML = '<img src="' + escapeHtml(primaryImage) + '" alt="Image primaire actuelle" class="existing-image-thumb">';
+                    } else {
+                        primaryPreview.classList.add('text-muted');
+                        primaryPreview.textContent = 'Aucune image primaire';
+                    }
+                }
+
+                if (secondaryPreview) {
+                    var secondaryRaw = button.getAttribute('data-secondary-images') || '[]';
+                    var secondaryImages = [];
+
+                    try {
+                        secondaryImages = JSON.parse(secondaryRaw);
+                    } catch (e) {
+                        secondaryImages = [];
+                    }
+
+                    if (Array.isArray(secondaryImages) && secondaryImages.length > 0) {
+                        secondaryPreview.classList.remove('text-muted');
+                        secondaryPreview.innerHTML = secondaryImages.map(function (src) {
+                            return '<img src="' + escapeHtml(src) + '" alt="Image secondaire actuelle" class="existing-image-thumb">';
+                        }).join('');
+                    } else {
+                        secondaryPreview.classList.add('text-muted');
+                        secondaryPreview.textContent = 'Aucune image secondaire';
+                    }
+                }
+
                 articleForm.setAttribute('action', appBaseUrl + '/admin/articles/update/' + id);
                 openModal(articleModal);
             });

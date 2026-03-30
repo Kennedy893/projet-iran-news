@@ -81,6 +81,7 @@ if ($appBasePath !== '' && strpos($currentPath, $appBasePath) === 0) {
             <nav class="main-nav" role="navigation" aria-label="Navigation principale">
                 <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" <?= $currentPath === '/' ? 'class="active" aria-current="page"' : '' ?>>Accueil</a>
                 <a href="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>" <?= strpos($currentPath, '/search') === 0 ? 'class="active" aria-current="page"' : '' ?>>Recherche</a>
+                <a href="<?= htmlspecialchars(app_url('admin/login?force=1'), ENT_QUOTES, 'UTF-8') ?>">Page d'admin</a>
             </nav>
         </div>
     </header>

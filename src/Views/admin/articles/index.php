@@ -64,6 +64,15 @@ $categories = $categories ?? [];
                         $title = (string) ($article['titre'] ?? '');
                         $content = trim((string) ($article['contenu'] ?? ''));
                         $excerpt = mb_substr($content, 0, 130) . (mb_strlen($content) > 130 ? '...' : '');
+                        $primaryImagePath = (string) (($article['primary_image']['chemin'] ?? '') ?: '');
+                        $primaryImageUrlForEdit = $primaryImagePath !== '' ? image_url($primaryImagePath) : '';
+                        $secondaryImageUrlsForEdit = [];
+                        foreach (($article['secondary_images'] ?? []) as $secondaryImage) {
+                            $secondaryPath = (string) ($secondaryImage['chemin'] ?? '');
+                            if ($secondaryPath !== '') {
+                                $secondaryImageUrlsForEdit[] = image_url($secondaryPath);
+                            }
+                        }
                         ?>
                         <tr>
                             <td>
@@ -125,7 +134,9 @@ $categories = $categories ?? [];
                                     data-titre="<?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?>"
                                     data-contenu="<?= htmlspecialchars((string) ($article['contenu'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
                                     data-date="<?= htmlspecialchars((string) ($article['date_pub'] ?? date('Y-m-d')), ENT_QUOTES, 'UTF-8') ?>"
-                                    data-categorie="<?= (int) ($article['id_categorie'] ?? 0) ?>">
+                                    data-categorie="<?= (int) ($article['id_categorie'] ?? 0) ?>"
+                                    data-primary-image="<?= htmlspecialchars($primaryImageUrlForEdit, ENT_QUOTES, 'UTF-8') ?>"
+                                    data-secondary-images="<?= htmlspecialchars(json_encode($secondaryImageUrlsForEdit, JSON_UNESCAPED_SLASHES), ENT_QUOTES, 'UTF-8') ?>">
                                     Modifier
                                 </button>
                                 <form class="inline" action="<?= htmlspecialchars(app_url('admin/articles/delete/' . $articleId), ENT_QUOTES, 'UTF-8') ?>" method="POST" onsubmit="return confirm('Supprimer cet article ?');">
@@ -187,6 +198,16 @@ $categories = $categories ?? [];
                         <option value="<?= (int) ($cat['id'] ?? 0) ?>"><?= htmlspecialchars((string) ($cat['libelle'] ?? ''), ENT_QUOTES, 'UTF-8') ?></option>
                     <?php endforeach; ?>
                 </select>
+            </div>
+            <div class="existing-images-preview" aria-live="polite">
+                <div>
+                    <strong>Image primaire actuelle</strong>
+                    <div id="article-edit-primary-preview" class="existing-image-slot text-muted">Aucune image primaire</div>
+                </div>
+                <div>
+                    <strong>Images secondaires actuelles</strong>
+                    <div id="article-edit-secondary-preview" class="existing-secondary-grid text-muted">Aucune image secondaire</div>
+                </div>
             </div>
             <label>Remplacer l'image primaire (optionnel)</label>
             <input type="file" id="article-edit-primary" name="image_primaire" accept="image/*">

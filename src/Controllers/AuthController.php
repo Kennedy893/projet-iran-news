@@ -14,6 +14,12 @@ class AuthController
 
     public function showLogin()
     {
+        $forceLogin = isset($_GET['force']) && (string) $_GET['force'] === '1';
+
+        if ($forceLogin) {
+            unset($_SESSION['admin_user']);
+        }
+
         if ($this->isAuthenticated()) {
             $this->redirect('admin/dashboard');
             return;

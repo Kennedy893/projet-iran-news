@@ -375,6 +375,35 @@ textarea {
     gap: 0.6rem;
 }
 
+.existing-images-preview {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.65rem;
+    background: #f9fbfc;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.existing-image-slot {
+    margin-top: 0.35rem;
+}
+
+.existing-secondary-grid {
+    margin-top: 0.35rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.45rem;
+}
+
+.existing-image-thumb {
+    width: 100%;
+    height: 78px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: #fff;
+}
+
 .form-grid.two {
     grid-template-columns: 2fr 1fr;
 }

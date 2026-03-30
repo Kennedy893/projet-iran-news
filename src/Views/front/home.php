@@ -30,6 +30,9 @@ $categories = $categories ?? [];
                         $categoryName = $article['categorie_libelle'] ?? ($article['category_name'] ?? 'Général');
                         $publishedAt = $article['date_pub'] ?? null;
                         $imageUrl = $article['image_url'] ?? '';
+                        $imageSrc = (strpos((string) $imageUrl, 'http://') === 0 || strpos((string) $imageUrl, 'https://') === 0)
+                            ? (string) $imageUrl
+                            : app_url(ltrim((string) $imageUrl, '/'));
 
                         $excerpt = mb_substr(trim(strip_tags((string) $content)), 0, 180);
                         if (mb_strlen(trim(strip_tags((string) $content))) > 180) {

@@ -10,11 +10,16 @@ class MetaManager
         'robots' => 'index, follow',
         'og_title' => 'Iran Info',
         'og_description' => 'Suivez l\'actualité du conflit en Iran',
-        'og_image' => 'https://iraninfo.com/assets/images/default-og-image.jpg',
+        'og_image' => '',
         'og_type' => 'website',
         'twitter_card' => 'summary_large_image',
         'canonical' => ''
     ];
+
+    public function __construct()
+    {
+        $this->meta['og_image'] = app_url('assets/images/default-og-image.jpg');
+    }
     
     public function setHomeMeta()
     {

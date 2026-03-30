@@ -1,7 +1,8 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
+	RewriteBase /S6/projet-iran-news/public/
 
-	# If the requested path is an existing file or directory, serve it directly.
+	# Laisser passer les fichiers et dossiers physiques.
 	RewriteCond %{REQUEST_FILENAME} -f [OR]
 	RewriteCond %{REQUEST_FILENAME} -d
 	RewriteRule ^ - [L]

@@ -31,12 +31,18 @@ class MetaManager
     
     public function setArticleMeta($article)
     {
-        $this->meta['title'] = $article['title'] . ' | Iran Info';
-        $this->meta['description'] = substr(strip_tags($article['excerpt']), 0, 155);
-        $this->meta['keywords'] = $article['category_name'] . ', Iran, actualités, guerre';
-        $this->meta['og_title'] = $article['title'];
-        $this->meta['og_description'] = substr(strip_tags($article['excerpt']), 0, 155);
-        $this->meta['og_image'] = $article['featured_image'] ?? $this->meta['og_image'];
+        $title = (string) ($article['titre'] ?? ($article['title'] ?? 'Article'));
+        $content = (string) ($article['contenu'] ?? ($article['excerpt'] ?? ''));
+        $description = substr(strip_tags($content), 0, 155);
+
+        $this->meta['title'] = $title . ' | Iran Info';
+        $this->meta['description'] = $description;
+        $this->meta['keywords'] = ($article['category_name'] ?? 'Iran') . ', Iran, actualités, guerre';
+        $this->meta['og_title'] = $title;
+        $this->meta['og_description'] = $description;
+        $this->meta['og_image'] = !empty($article['image_url'])
+            ? app_url(ltrim((string) $article['image_url'], '/'))
+            : $this->meta['og_image'];
         $this->meta['og_type'] = 'article';
         $this->meta['twitter_card'] = 'summary_large_image';
         $this->meta['canonical'] = app_url('article/' . $article['id']);

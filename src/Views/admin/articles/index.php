@@ -69,6 +69,51 @@ $categories = $categories ?? [];
                             <td>
                                 <div class="item-title"><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?></div>
                                 <div class="item-subtext"><?= htmlspecialchars($excerpt, ENT_QUOTES, 'UTF-8') ?></div>
+
+                                <div class="article-gallery" aria-label="Galerie des images de l'article">
+                                    <?php if (!empty($article['primary_image'])): ?>
+                                        <?php
+                                        $primary = $article['primary_image'];
+                                        $primaryPath = (string) ($primary['chemin'] ?? '');
+                                        $primaryUrl = app_url(ltrim($primaryPath, '/'));
+                                        ?>
+                                        <div class="image-item image-item-primary">
+                                            <button type="button" class="image-thumb-btn js-open-lightbox" data-image-src="<?= htmlspecialchars($primaryUrl, ENT_QUOTES, 'UTF-8') ?>">
+                                                <img src="<?= htmlspecialchars($primaryUrl, ENT_QUOTES, 'UTF-8') ?>" alt="Image primaire" class="image-thumb">
+                                            </button>
+                                            <div class="image-meta">
+                                                <span class="tag">Primaire</span>
+                                                <form class="inline" action="<?= htmlspecialchars(app_url('admin/articles/images/delete/' . (int) ($primary['id'] ?? 0)), ENT_QUOTES, 'UTF-8') ?>" method="POST" onsubmit="return confirm('Attention: cette action supprimera definitivement l\'image primaire. Continuer ?');">
+                                                    <button type="submit" class="btn btn-danger btn-xs">Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($article['secondary_images'])): ?>
+                                        <?php foreach ($article['secondary_images'] as $secondary): ?>
+                                            <?php
+                                            $secondaryPath = (string) ($secondary['chemin'] ?? '');
+                                            $secondaryUrl = app_url(ltrim($secondaryPath, '/'));
+                                            ?>
+                                            <div class="image-item">
+                                                <button type="button" class="image-thumb-btn js-open-lightbox" data-image-src="<?= htmlspecialchars($secondaryUrl, ENT_QUOTES, 'UTF-8') ?>">
+                                                    <img src="<?= htmlspecialchars($secondaryUrl, ENT_QUOTES, 'UTF-8') ?>" alt="Image secondaire" class="image-thumb">
+                                                </button>
+                                                <div class="image-meta">
+                                                    <span class="tag">Secondaire</span>
+                                                    <form class="inline" action="<?= htmlspecialchars(app_url('admin/articles/images/delete/' . (int) ($secondary['id'] ?? 0)), ENT_QUOTES, 'UTF-8') ?>" method="POST" onsubmit="return confirm('Attention: cette action supprimera definitivement l\'image secondaire. Continuer ?');">
+                                                        <button type="submit" class="btn btn-danger btn-xs">Supprimer</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+
+                                    <?php if (empty($article['primary_image']) && empty($article['secondary_images'])): ?>
+                                        <p class="text-muted" style="margin:.35rem 0 0;">Aucune image pour cet article.</p>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                             <td><span class="tag"><?= htmlspecialchars((string) ($article['category_name'] ?? 'N/A'), ENT_QUOTES, 'UTF-8') ?></span></td>
                             <td><?= htmlspecialchars((string) ($article['date_pub'] ?? ''), ENT_QUOTES, 'UTF-8') ?></td>
@@ -80,7 +125,6 @@ $categories = $categories ?? [];
                                     data-titre="<?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?>"
                                     data-contenu="<?= htmlspecialchars((string) ($article['contenu'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
                                     data-date="<?= htmlspecialchars((string) ($article['date_pub'] ?? date('Y-m-d')), ENT_QUOTES, 'UTF-8') ?>"
-                                    data-image="<?= htmlspecialchars((string) ($article['image_url'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
                                     data-categorie="<?= (int) ($article['id_categorie'] ?? 0) ?>">
                                     Modifier
                                 </button>
@@ -103,7 +147,7 @@ $categories = $categories ?? [];
             <h3 id="article-create-title">Ajouter un article</h3>
             <button type="button" class="btn modal-close" data-close-modal>&times;</button>
         </div>
-        <form action="<?= htmlspecialchars(app_url('admin/articles/store'), ENT_QUOTES, 'UTF-8') ?>" method="POST" class="form-grid" id="article-create-form">
+        <form action="<?= htmlspecialchars(app_url('admin/articles/store'), ENT_QUOTES, 'UTF-8') ?>" method="POST" enctype="multipart/form-data" class="form-grid" id="article-create-form">
             <input type="text" name="titre" placeholder="Titre" required>
             <textarea name="contenu" placeholder="Contenu" required></textarea>
             <div class="form-grid two">
@@ -115,7 +159,10 @@ $categories = $categories ?? [];
                     <?php endforeach; ?>
                 </select>
             </div>
-            <input type="url" name="image_url" placeholder="URL image (optionnel)">
+            <label>Image primaire (obligatoire)</label>
+            <input type="file" name="image_primaire" accept="image/*" required>
+            <label>Images secondaires (optionnelles, multiples)</label>
+            <input type="file" name="images_secondaires[]" accept="image/*" multiple>
             <div class="modal-actions">
                 <button type="button" class="btn" data-close-modal>Annuler</button>
                 <button type="submit" class="btn-primary">Ajouter l'article</button>
@@ -130,7 +177,7 @@ $categories = $categories ?? [];
             <h3 id="article-edit-title">Modifier l'article</h3>
             <button type="button" class="btn modal-close" data-close-modal>&times;</button>
         </div>
-        <form id="article-edit-form" method="POST" class="form-grid">
+        <form id="article-edit-form" method="POST" enctype="multipart/form-data" class="form-grid">
             <input type="text" id="article-edit-titre" name="titre" required>
             <textarea id="article-edit-contenu" name="contenu" required></textarea>
             <div class="form-grid two">
@@ -141,12 +188,27 @@ $categories = $categories ?? [];
                     <?php endforeach; ?>
                 </select>
             </div>
-            <input type="url" id="article-edit-image" name="image_url" placeholder="URL image">
+            <label>Remplacer l'image primaire (optionnel)</label>
+            <input type="file" id="article-edit-primary" name="image_primaire" accept="image/*">
+            <label>Ajouter des images secondaires (optionnel, multiples)</label>
+            <input type="file" id="article-edit-secondary" name="images_secondaires[]" accept="image/*" multiple>
             <div class="modal-actions">
                 <button type="button" class="btn" data-close-modal>Annuler</button>
                 <button type="submit" class="btn-primary">Enregistrer</button>
             </div>
         </form>
+    </div>
+</div>
+
+<div id="image-lightbox-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card modal-image" role="dialog" aria-modal="true" aria-labelledby="image-lightbox-title">
+        <div class="modal-header">
+            <h3 id="image-lightbox-title">Apercu image</h3>
+            <button type="button" class="btn modal-close" data-close-modal>&times;</button>
+        </div>
+        <div class="lightbox-content">
+            <img id="lightbox-image" src="" alt="Agrandissement image" class="lightbox-image">
+        </div>
     </div>
 </div>
 

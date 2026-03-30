@@ -35,6 +35,7 @@ $router->add('GET', '/admin/articles', 'AdminController@listArticles');
 $router->add('POST', '/admin/articles/store', 'AdminController@storeArticle');
 $router->add('POST', '/admin/articles/update/{id}', 'AdminController@updateArticle');
 $router->add('POST', '/admin/articles/delete/{id}', 'AdminController@deleteArticle');
+$router->add('POST', '/admin/articles/images/delete/{id}', 'AdminController@deleteArticleImage');
 $router->add('GET', '/admin/categories', 'AdminController@listCategories');
 $router->add('POST', '/admin/categories/store', 'AdminController@storeCategory');
 $router->add('POST', '/admin/categories/update/{id}', 'AdminController@updateCategory');

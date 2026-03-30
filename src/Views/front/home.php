@@ -30,6 +30,9 @@ $categories = $categories ?? [];
                         $categoryName = $article['categorie_libelle'] ?? ($article['category_name'] ?? 'General');
                         $publishedAt = $article['date_pub'] ?? null;
                         $imageUrl = $article['image_url'] ?? '';
+                        $imageSrc = (strpos((string) $imageUrl, 'http://') === 0 || strpos((string) $imageUrl, 'https://') === 0)
+                            ? (string) $imageUrl
+                            : app_url(ltrim((string) $imageUrl, '/'));
 
                         $excerpt = mb_substr(trim(strip_tags((string) $content)), 0, 180);
                         if (mb_strlen(trim(strip_tags((string) $content))) > 180) {
@@ -40,7 +43,7 @@ $categories = $categories ?? [];
                             <?php if (!empty($imageUrl)): ?>
                                 <a href="<?= htmlspecialchars(app_url('article/' . rawurlencode((string) $articleId)), ENT_QUOTES, 'UTF-8') ?>">
                                     <img
-                                        src="<?= htmlspecialchars((string) $imageUrl, ENT_QUOTES, 'UTF-8') ?>"
+                                        src="<?= htmlspecialchars((string) $imageSrc, ENT_QUOTES, 'UTF-8') ?>"
                                         alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
                                         style="width:100%;height:auto;border-radius:6px;">
                                 </a>

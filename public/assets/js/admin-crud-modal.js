@@ -19,6 +19,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
+
+        if (modal.id === 'image-lightbox-modal') {
+            var img = document.getElementById('lightbox-image');
+            if (img) {
+                img.setAttribute('src', '');
+            }
+        }
     }
 
     document.querySelectorAll('.js-open-modal').forEach(function (button) {
@@ -46,16 +53,15 @@ document.addEventListener('DOMContentLoaded', function () {
         var titleInput = document.getElementById('article-edit-titre');
         var contentInput = document.getElementById('article-edit-contenu');
         var dateInput = document.getElementById('article-edit-date');
-        var imageInput = document.getElementById('article-edit-image');
         var categorySelect = document.getElementById('article-edit-categorie');
 
         openArticleButtons.forEach(function (button) {
             button.addEventListener('click', function () {
                 var id = button.getAttribute('data-id') || '';
+                articleForm.reset();
                 titleInput.value = button.getAttribute('data-titre') || '';
                 contentInput.value = button.getAttribute('data-contenu') || '';
                 dateInput.value = button.getAttribute('data-date') || '';
-                imageInput.value = button.getAttribute('data-image') || '';
                 categorySelect.value = button.getAttribute('data-categorie') || '';
                 articleForm.setAttribute('action', appBaseUrl + '/admin/articles/update/' + id);
                 openModal(articleModal);
@@ -76,6 +82,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 labelInput.value = button.getAttribute('data-libelle') || '';
                 categoryForm.setAttribute('action', appBaseUrl + '/admin/categories/update/' + id);
                 openModal(categoryModal);
+            });
+        });
+    }
+
+    var lightboxModal = document.getElementById('image-lightbox-modal');
+    var lightboxImage = document.getElementById('lightbox-image');
+
+    if (lightboxModal && lightboxImage) {
+        document.querySelectorAll('.js-open-lightbox').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var src = button.getAttribute('data-image-src') || '';
+                if (!src) {
+                    return;
+                }
+                lightboxImage.setAttribute('src', src);
+                openModal(lightboxModal);
             });
         });
     }

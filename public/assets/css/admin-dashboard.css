@@ -93,6 +93,11 @@ button.btn-primary:hover {
     background: #ffe8e8;
 }
 
+.btn-xs {
+    font-size: 0.78rem;
+    padding: 0.22rem 0.48rem;
+}
+
 .grid-stats {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -167,6 +172,59 @@ table {
     color: var(--muted);
     font-size: 0.9rem;
     line-height: 1.4;
+}
+
+.article-gallery {
+    margin-top: 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.6rem;
+}
+
+.image-item {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.35rem;
+    background: #fff;
+}
+
+.image-item-primary {
+    border-color: #9ac9bd;
+    background: #f4fbf8;
+}
+
+.image-thumb-btn {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    width: 100%;
+    cursor: zoom-in;
+}
+
+.image-thumb {
+    width: 100%;
+    height: 95px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+.image-meta {
+    margin-top: 0.35rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+}
+
+.image-meta .inline {
+    width: 100%;
+}
+
+.image-meta .btn {
+    width: 100%;
+    text-align: center;
 }
 
 .tag {
@@ -253,6 +311,25 @@ form.inline {
 
 .modal-card.modal-small {
     width: min(100%, 520px);
+}
+
+.modal-card.modal-image {
+    width: min(100%, 980px);
+    max-height: 95vh;
+}
+
+.lightbox-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 260px;
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 75vh;
+    border-radius: 10px;
+    object-fit: contain;
 }
 
 .modal-header {

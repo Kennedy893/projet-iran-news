@@ -152,7 +152,7 @@ button.btn-primary:hover {
 .btn-add-prominent {
     font-weight: 700;
     padding: 0.62rem 1rem;
-    box-shadow: 0 8px 20px rgba(26, 58, 82, 0.22);
+    box-shadow: 0 8px 20px rgba(102, 119, 132, 0.22);
     letter-spacing: 0.01em;
 }
 

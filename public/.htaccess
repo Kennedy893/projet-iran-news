@@ -1,13 +1,15 @@
 <IfModule mod_rewrite.c>
-	RewriteEngine On
-	RewriteBase /S6/projet-iran-news/public/
+    RewriteEngine On
+    RewriteBase /S6/projet-iran-news/public/
 
-	# Laisser passer les fichiers et dossiers physiques.
-	RewriteCond %{REQUEST_FILENAME} -f [OR]
-	RewriteCond %{REQUEST_FILENAME} -d
-	RewriteRule ^ - [L]
+    # Laisser passer les fichiers et dossiers existants
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
 
-	# Route all other requests to the front controller.
-	RewriteRule ^ index.php [L,QSA]
+    # Exemple SEO-friendly : /article/12-tensions-en-iran-nouvelles-sanctions
+    RewriteRule ^article/([0-9]+)-([a-zA-Z0-9-]+)$ index.php?article_id=$1&slug=$2 [L,QSA]
+
+    # Toutes les autres requêtes vers index.php
+    RewriteRule ^ index.php [L,QSA]
 </IfModule>
-

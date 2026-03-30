@@ -2,7 +2,7 @@
 $meta = $meta ?? [];
 
 $title = $meta['title'] ?? 'Iran Info - Actualites du conflit en Iran';
-$description = $meta['description'] ?? "Suivez en direct l'actualite du conflit en Iran.";
+$description = $meta['description'] ?? "Suivez les dernières actualités sur le conflit en Iran : analyses, tensions géopolitiques et informations fiables mises à jour en temps réel.";
 $keywords = $meta['keywords'] ?? 'Iran, conflit, actualites';
 $robots = $meta['robots'] ?? 'index, follow';
 $ogTitle = $meta['og_title'] ?? $title;
@@ -10,9 +10,9 @@ $ogDescription = $meta['og_description'] ?? $description;
 $ogImage = $meta['og_image'] ?? app_url('assets/images/default-og-image.jpg');
 $ogType = $meta['og_type'] ?? 'website';
 $twitterCard = $meta['twitter_card'] ?? 'summary_large_image';
-$canonical = $meta['canonical'] ?? '';
 $currentPage = $_SERVER['REQUEST_URI'] ?? '/';
 $currentPath = parse_url((string) $currentPage, PHP_URL_PATH) ?: '/';
+$canonical = $meta['canonical'] ?? app_url(ltrim($currentPath, '/'));
 $appBasePath = parse_url(APP_URL, PHP_URL_PATH) ?: '';
 
 if ($appBasePath !== '' && strpos($currentPath, $appBasePath) === 0) {
@@ -30,11 +30,11 @@ if ($appBasePath !== '' && strpos($currentPath, $appBasePath) === 0) {
 
     <title><?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?></title>
     <meta name="description" content="<?= htmlspecialchars((string) $description, ENT_QUOTES, 'UTF-8') ?>">
-    <meta name="keywords" content="<?= htmlspecialchars((string) $keywords, ENT_QUOTES, 'UTF-8') ?>">
     <meta name="robots" content="<?= htmlspecialchars((string) $robots, ENT_QUOTES, 'UTF-8') ?>">
     <meta name="author" content="Iran Info">
 
     <!-- Open Graph / Facebook -->
+    <meta property="og:url" content="<?= htmlspecialchars(app_url(ltrim($currentPath, '/')), ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:title" content="<?= htmlspecialchars((string) $ogTitle, ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:description" content="<?= htmlspecialchars((string) $ogDescription, ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:image" content="<?= htmlspecialchars((string) $ogImage, ENT_QUOTES, 'UTF-8') ?>">
@@ -57,16 +57,15 @@ if ($appBasePath !== '' && strpos($currentPath, $appBasePath) === 0) {
     <link rel="icon" type="image/png" href="<?= htmlspecialchars(app_url('favicon.png'), ENT_QUOTES, 'UTF-8') ?>">
 
     <!-- Stylesheets -->
-    <!-- <link rel="stylesheet" href="/assets/css/variables.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/responsive.css"> -->
-
     <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8') ?>">
     <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/variables.css'), ENT_QUOTES, 'UTF-8') ?>">
     <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/responsive.css'), ENT_QUOTES, 'UTF-8') ?>">
 
     <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Favicons (mobile) -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
     <!-- Skip to main content pour accessibilité -->

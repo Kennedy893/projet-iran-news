@@ -1,28 +1,73 @@
 <?php
-$article = $article ?? null;
-$relatedArticles = $relatedArticles ?? [];
-$secondaryImages = $secondaryImages ?? [];
+    $article = $article ?? null;
+    $relatedArticles = $relatedArticles ?? [];
+    $secondaryImages = $secondaryImages ?? [];
 
-if (!$article) {
-    header('HTTP/1.0 404 Not Found');
-    include __DIR__ . '/404.php';
-    exit;
-}
+    if (!$article) {
+        header('HTTP/1.0 404 Not Found');
+        include __DIR__ . '/404.php';
+        exit;
+    }
 
-$title = $article['titre'] ?? 'Article';
-$content = $article['contenu'] ?? '';
-$categoryName = $article['categorie_libelle'] ?? 'Général';
-$categoryId = $article['id_categorie'] ?? '';
-$publishedAt = $article['date_pub'] ?? null;
-$imageUrl = $article['image_url'] ?? '';
-$articleId = $article['id'] ?? '';
+    $title = $article['titre'] ?? 'Article';
+    $content = $article['contenu'] ?? '';
+    $categoryName = $article['categorie_libelle'] ?? 'Général';
+    $categoryId = $article['id_categorie'] ?? '';
+    $publishedAt = $article['date_pub'] ?? null;
+    $imageUrl = $article['image_url'] ?? '';
+    $articleId = $article['id'] ?? '';
+
+    function formatContentSEO($content) 
+    {
+        $content = trim(strip_tags($content));
+        $paragraphs = preg_split('/\n+/', $content);
+
+        $html = '';
+        $count = 0;
+
+        foreach ($paragraphs as $para) {
+            $para = trim($para);
+            if (empty($para)) continue;
+
+            if ($count % 2 === 0) {
+                $words = explode(' ', $para);
+                $title = implode(' ', array_slice($words, 0, 8));
+
+                $html .= '<h2>Analyse : ' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '...</h2>';
+            }
+
+            $html .= '<p>' . htmlspecialchars($para, ENT_QUOTES, 'UTF-8') . '</p>';
+            $count++;
+        }
+
+        return $html;
+    }
+
+    function generateAlt($title, $index = null) 
+    {
+        $variations = [
+            "Illustration de",
+            "Photo liée à",
+            "Contexte de",
+            "Situation concernant",
+            "Scène montrant"
+        ];
+
+        if ($index === null) {
+            return htmlspecialchars("Illustration de : " . $title, ENT_QUOTES, 'UTF-8');
+        }
+
+        $prefix = $variations[$index % count($variations)];
+
+        return htmlspecialchars($prefix . " : " . $title, ENT_QUOTES, 'UTF-8');
+    }
 ?>
 
 <main id="main-content" class="container" role="main">
     <!-- Breadcrumb -->
     <nav aria-label="Fil d'Ariane" class="breadcrumb" style="margin-bottom:var(--spacing-lg);font-size:var(--font-size-sm);">
         <ol style="list-style:none;padding:0;margin:0;display:flex;gap:var(--spacing-xs);flex-wrap:wrap;">
-            <li><a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>">Accueil</a></li>
+            <li><a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" rel="noopener">Accueil</a></li>
             <li aria-hidden="true" style="color:var(--color-text-muted);">/</li>
             <li><a href="<?= htmlspecialchars(app_url('categorie/' . rawurlencode((string) $categoryId)), ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?></a></li>
             <li aria-hidden="true" style="color:var(--color-text-muted);">/</li>
@@ -63,14 +108,14 @@ $articleId = $article['id'] ?? '';
                     src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
                     data-zoom-src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
                     class="js-zoomable-image"
-                    alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
+                    alt="<?= generateAlt($title) ?>"
                     style="width:auto;max-width:100%;height:auto;max-height:500px;object-fit:contain;border-radius:var(--border-radius-md);margin-inline:auto;">
             </figure>
         <?php endif; ?>
 
         <!-- Contenu de l'article -->
         <div class="article-content" style="font-family:var(--font-serif);font-size:var(--font-size-md);line-height:1.8;color:var(--color-text-primary);">
-            <?= nl2br(htmlspecialchars((string) $content, ENT_QUOTES, 'UTF-8')) ?>
+            <?= formatContentSEO($content) ?>
         </div>
 
         <?php if (!empty($secondaryImages)): ?>
@@ -92,7 +137,7 @@ $articleId = $article['id'] ?? '';
                                 src="<?= htmlspecialchars($secondarySrc, ENT_QUOTES, 'UTF-8') ?>"
                                 data-zoom-src="<?= htmlspecialchars($secondarySrc, ENT_QUOTES, 'UTF-8') ?>"
                                 class="js-zoomable-image"
-                                alt="<?= htmlspecialchars($legend, ENT_QUOTES, 'UTF-8') ?>"
+                                alt="<?= generateAlt($title, $index) ?>"
                                 loading="lazy"
                                 style="width:auto;max-width:100%;height:auto;max-height:220px;object-fit:contain;margin-inline:auto;border-radius:var(--border-radius-sm);">
                             <figcaption style="margin-top:var(--spacing-xs);font-size:var(--font-size-xs);color:var(--color-text-tertiary);text-align:center;">

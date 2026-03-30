@@ -4,21 +4,31 @@ $categories = $categories ?? [];
 ?>
 
 <main id="main-content" class="container" role="main">
+    
     <!-- Hero Section -->
     <section class="home-hero" aria-labelledby="site-title">
-        <h1 id="site-title">Iran Info</h1>
-        <p>Actualités et analyses sur le conflit en Iran. Information objective, vérifiée et contextualisée.</p>
+        <!-- H1 avec mot-clé principal -->
+        <h1 id="site-title">Actualités sur le conflit en Iran : analyses et informations fiables</h1>
+        
+        <p>
+            Suivez les dernières actualités sur l’Iran, avec des analyses détaillées, des informations vérifiées et un suivi du conflit en Iran en temps réel.
+        </p>
     </section>
 
     <!-- Grille principale -->
     <div class="home-grid">
+
         <!-- Section Articles -->
         <section aria-labelledby="recent-articles-title">
-            <h2 id="recent-articles-title">Derniers articles</h2>
+            
+            <!-- H2 avec mot-clé secondaire -->
+            <h2 id="recent-articles-title">Dernières actualités sur l’Iran et le conflit</h2>
 
             <?php if (empty($articles)): ?>
                 <div class="empty-state" style="padding:var(--spacing-2xl);text-align:center;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--border-radius-md);">
-                    <p style="color:var(--color-text-secondary);margin:0;">Aucun article disponible pour le moment.</p>
+                    <p style="color:var(--color-text-secondary);margin:0;">
+                        Aucun article sur le conflit en Iran n’est disponible pour le moment.
+                    </p>
                 </div>
             <?php else: ?>
                 <div class="articles-list">
@@ -30,59 +40,79 @@ $categories = $categories ?? [];
                         $categoryName = $article['categorie_libelle'] ?? ($article['category_name'] ?? 'Général');
                         $publishedAt = $article['date_pub'] ?? null;
                         $imageUrl = $article['image_url'] ?? '';
-                        $imageSrc = (strpos((string) $imageUrl, 'http://') === 0 || strpos((string) $imageUrl, 'https://') === 0)
-                            ? (string) $imageUrl
-                            : app_url(ltrim((string) $imageUrl, '/'));
 
                         $excerpt = mb_substr(trim(strip_tags((string) $content)), 0, 180);
                         if (mb_strlen(trim(strip_tags((string) $content))) > 180) {
                             $excerpt .= '...';
                         }
-                        
+
                         $articleUrl = app_url('article/' . rawurlencode((string) $articleId));
                         $categoryUrl = isset($article['id_categorie']) ? app_url('categorie/' . rawurlencode((string) $article['id_categorie'])) : '#';
                         ?>
                         
                         <article class="article-card">
+                            
                             <?php if (!empty($imageUrl)): ?>
-                                <a href="<?= $articleUrl ?>" aria-label="Lire l'article: <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>">
+                                <a 
+                                    href="<?= $articleUrl ?>" 
+                                    title="Lire l’article : <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
+                                    rel="noopener"
+                                >
                                     <img
                                         src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
-                                        data-zoom-src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
                                         class="js-zoomable-image"
-                                        alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
+                                        alt="Image illustrant <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?> - actualité sur le conflit en Iran"                          
                                         loading="lazy">
                                 </a>
                             <?php endif; ?>
 
+                            <!-- H3 pour chaque article -->
                             <h3>
-                                <a href="<?= $articleUrl ?>">
+                                <a 
+                                    href="<?= $articleUrl ?>" 
+                                    title="Consulter l’analyse complète : <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
+                                    rel="noopener"
+                                >
                                     <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>
                                 </a>
                             </h3>
 
+                            <!-- Métadonnées -->
                             <div class="article-meta">
                                 <span>
-                                    <strong>Catégorie:</strong> 
-                                    <a href="<?= $categoryUrl ?>">
+                                    <strong>Catégorie :</strong> 
+                                    <a 
+                                        href="<?= $categoryUrl ?>" 
+                                        title="Voir les articles de la catégorie <?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?>"
+                                        rel="noopener"
+                                    >
                                         <?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?>
                                     </a>
                                 </span>
+
                                 <?php if (!empty($publishedAt)): ?>
                                     <time datetime="<?= htmlspecialchars((string) $publishedAt, ENT_QUOTES, 'UTF-8') ?>">
-                                        <?= htmlspecialchars((string) date('d/m/Y', strtotime((string) $publishedAt)), ENT_QUOTES, 'UTF-8') ?>
+                                        Publié le <?= htmlspecialchars((string) date('d/m/Y', strtotime((string) $publishedAt)), ENT_QUOTES, 'UTF-8') ?>
                                     </time>
                                 <?php endif; ?>
                             </div>
 
+                            <!-- Extrait optimisé -->
                             <p class="article-excerpt">
                                 <?= htmlspecialchars((string) $excerpt, ENT_QUOTES, 'UTF-8') ?>
                             </p>
 
-                            <a href="<?= $articleUrl ?>" class="read-more">
-                                Lire l'article 
+                            <!-- Lien optimisé SEO -->
+                            <a 
+                                href="<?= $articleUrl ?>" 
+                                class="read-more"
+                                title="Lire l’article complet : <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
+                                rel="noopener"
+                            >
+                                Lire l’article complet sur <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>
                                 <span aria-hidden="true">→</span>
                             </a>
+
                         </article>
                     <?php endforeach; ?>
                 </div>

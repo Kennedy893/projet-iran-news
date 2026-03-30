@@ -176,3 +176,18 @@ Important pour que les URLs type `/admin/login` fonctionnent sur Apache/XAMPP.
 3. Lancer Apache/MySQL (XAMPP).
 4. Ouvrir: `http://localhost/S6/projet-iran-news/public/`
 5. Admin: `http://localhost/S6/projet-iran-news/public/admin/login`
+
+
+
+NB :
+<!-- Exemple SEO-friendly : /article/12-tensions-en-iran-nouvelles-sanctions -->
+RewriteRule ^article/([0-9]+)-([a-zA-Z0-9-]+)$ index.php?article_id=$1&slug=$2 [L,QSA]
+
+Explication
+1- ^article/([0-9]+)-([a-zA-Z0-9-]+)$
+[0-9]+ → capture l’ID de l’article
+[a-zA-Z0-9-]+ → capture le slug SEO
+2- index.php?article_id=$1&slug=$2
+$1 = ID
+$2 = slug
+3- QSA → Query String Append, pour conserver d’éventuels paramètres GET.

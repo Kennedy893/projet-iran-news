@@ -10,7 +10,7 @@ $totalResults = count($results);
         <h1 style="font-size:var(--font-size-3xl);margin-bottom:var(--spacing-lg);">Recherche</h1>
         
         <!-- Formulaire de recherche -->
-        <form action="/search" method="get" role="search" style="max-width:600px;">
+        <form action="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>" method="get" role="search" style="max-width:600px;">
             <div style="display:flex;gap:var(--spacing-sm);">
                 <label for="search-input" class="sr-only">Rechercher des articles</label>
                 <input
@@ -63,7 +63,7 @@ $totalResults = count($results);
                 <li>Essayez des mots-clés plus généraux</li>
                 <li>Essayez des mots-clés différents</li>
             </ul>
-            <a href="/" style="display:inline-block;padding:var(--spacing-sm) var(--spacing-lg);background-color:var(--color-primary);color:white;border-radius:var(--border-radius-sm);text-decoration:none;font-weight:600;">
+            <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" style="display:inline-block;padding:var(--spacing-sm) var(--spacing-lg);background-color:var(--color-primary);color:white;border-radius:var(--border-radius-sm);text-decoration:none;font-weight:600;">
                 Retour à l'accueil
             </a>
         </div>
@@ -90,7 +90,7 @@ $totalResults = count($results);
                         $excerpt = preg_replace('/(' . preg_quote($query, '/') . ')/i', '<mark style="background-color:var(--color-accent-light);padding:2px 4px;border-radius:2px;">$1</mark>', $excerpt);
                     }
                     
-                    $articleUrl = '/article/' . rawurlencode((string) $articleId);
+                    $articleUrl = app_url('article/' . rawurlencode((string) $articleId));
                     ?>
                     
                     <article class="article-card">

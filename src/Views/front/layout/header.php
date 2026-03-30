@@ -12,6 +12,13 @@ $ogType = $meta['og_type'] ?? 'website';
 $twitterCard = $meta['twitter_card'] ?? 'summary_large_image';
 $canonical = $meta['canonical'] ?? '';
 $currentPage = $_SERVER['REQUEST_URI'] ?? '/';
+$currentPath = parse_url((string) $currentPage, PHP_URL_PATH) ?: '/';
+$appBasePath = parse_url(APP_URL, PHP_URL_PATH) ?: '';
+
+if ($appBasePath !== '' && strpos($currentPath, $appBasePath) === 0) {
+    $currentPath = substr($currentPath, strlen($appBasePath));
+    $currentPath = $currentPath === '' ? '/' : $currentPath;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -46,8 +53,8 @@ $currentPage = $_SERVER['REQUEST_URI'] ?? '/';
     <?php endif; ?>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="<?= htmlspecialchars(app_url('favicon.svg'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="icon" type="image/png" href="<?= htmlspecialchars(app_url('favicon.png'), ENT_QUOTES, 'UTF-8') ?>">
 
     <!-- Stylesheets -->
     <!-- <link rel="stylesheet" href="/assets/css/variables.css">
@@ -67,13 +74,13 @@ $currentPage = $_SERVER['REQUEST_URI'] ?? '/';
 
     <header class="site-header" role="banner">
         <div class="container">
-            <a href="/" class="site-logo" aria-label="Iran Info - Retour à l'accueil">
+            <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" class="site-logo" aria-label="Iran Info - Retour à l'accueil">
                 <span aria-hidden="true">📰</span>
                 <span>Iran Info</span>
             </a>
             <nav class="main-nav" role="navigation" aria-label="Navigation principale">
-                <a href="/" <?= $currentPage === '/' ? 'class="active" aria-current="page"' : '' ?>>Accueil</a>
-                <a href="/search" <?= strpos($currentPage, '/search') === 0 ? 'class="active" aria-current="page"' : '' ?>>Recherche</a>
+                <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" <?= $currentPath === '/' ? 'class="active" aria-current="page"' : '' ?>>Accueil</a>
+                <a href="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>" <?= strpos($currentPath, '/search') === 0 ? 'class="active" aria-current="page"' : '' ?>>Recherche</a>
             </nav>
         </div>
     </header>

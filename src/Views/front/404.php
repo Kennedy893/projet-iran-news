@@ -20,11 +20,11 @@ http_response_code(404);
 
         <!-- Actions -->
         <div style="display:flex;gap:var(--spacing-md);flex-wrap:wrap;justify-content:center;">
-            <a href="/" 
+            <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" 
                style="display:inline-block;padding:var(--spacing-md) var(--spacing-xl);background-color:var(--color-primary);color:white;border-radius:var(--border-radius-sm);text-decoration:none;font-weight:600;transition:background-color var(--transition-fast);">
                 Retour à l'accueil
             </a>
-            <a href="/search" 
+            <a href="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>" 
                style="display:inline-block;padding:var(--spacing-md) var(--spacing-xl);background-color:var(--color-surface);color:var(--color-primary);border:2px solid var(--color-primary);border-radius:var(--border-radius-sm);text-decoration:none;font-weight:600;transition:all var(--transition-fast);">
                 Rechercher
             </a>
@@ -42,10 +42,11 @@ http_response_code(404);
                         $articleId = $article['id'] ?? '';
                         $title = $article['titre'] ?? '';
                         $imageUrl = $article['image_url'] ?? '';
+                        $articleUrl = app_url('article/' . rawurlencode((string) $articleId));
                         ?>
                         <article class="article-card">
                             <?php if (!empty($imageUrl)): ?>
-                                <a href="/article/<?= rawurlencode((string) $articleId) ?>">
+                                <a href="<?= htmlspecialchars((string) $articleUrl, ENT_QUOTES, 'UTF-8') ?>">
                                     <img 
                                         src="<?= htmlspecialchars((string) $imageUrl, ENT_QUOTES, 'UTF-8') ?>"
                                         alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
@@ -53,7 +54,7 @@ http_response_code(404);
                                 </a>
                             <?php endif; ?>
                             <h3>
-                                <a href="/article/<?= rawurlencode((string) $articleId) ?>">
+                                <a href="<?= htmlspecialchars((string) $articleUrl, ENT_QUOTES, 'UTF-8') ?>">
                                     <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>
                                 </a>
                             </h3>

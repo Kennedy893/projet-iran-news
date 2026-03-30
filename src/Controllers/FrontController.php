@@ -121,10 +121,17 @@ class FrontController
 
     private function getRecentArticles($limit = 10)
     {
-        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.image_url, a.id_categorie,
+        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.id_categorie,
                        c.libelle AS categorie_libelle,
                        c.libelle AS category_name,
-                       a.id_categorie AS category_id
+                       a.id_categorie AS category_id,
+                       (
+                           SELECT i.chemin
+                           FROM image i
+                           WHERE i.id_article = a.id AND i.type_image = 1
+                           ORDER BY i.id ASC
+                           LIMIT 1
+                       ) AS image_url
                 FROM article a
                 LEFT JOIN categorie c ON a.id_categorie = c.id
                 ORDER BY a.date_pub DESC
@@ -149,10 +156,17 @@ class FrontController
 
     private function findArticleById($id)
     {
-        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.image_url, a.id_categorie,
+        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.id_categorie,
                        c.libelle AS categorie_libelle,
                        c.libelle AS category_name,
-                       a.id_categorie AS category_id
+                       a.id_categorie AS category_id,
+                       (
+                           SELECT i.chemin
+                           FROM image i
+                           WHERE i.id_article = a.id AND i.type_image = 1
+                           ORDER BY i.id ASC
+                           LIMIT 1
+                       ) AS image_url
                 FROM article a
                 LEFT JOIN categorie c ON a.id_categorie = c.id
                 WHERE a.id = :id";
@@ -164,10 +178,17 @@ class FrontController
 
     private function getRelatedArticles($categoryId, $currentId, $limit = 3)
     {
-        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.image_url, a.id_categorie,
+        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.id_categorie,
                        c.libelle AS categorie_libelle,
                        c.libelle AS category_name,
-                       a.id_categorie AS category_id
+                       a.id_categorie AS category_id,
+                       (
+                           SELECT i.chemin
+                           FROM image i
+                           WHERE i.id_article = a.id AND i.type_image = 1
+                           ORDER BY i.id ASC
+                           LIMIT 1
+                       ) AS image_url
                 FROM article a
                 LEFT JOIN categorie c ON a.id_categorie = c.id
                 WHERE a.id_categorie = :category_id
@@ -199,10 +220,17 @@ class FrontController
 
     private function findArticlesByCategory($categoryId)
     {
-        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.image_url, a.id_categorie,
+        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.id_categorie,
                        c.libelle AS categorie_libelle,
                        c.libelle AS category_name,
-                       a.id_categorie AS category_id
+                       a.id_categorie AS category_id,
+                       (
+                           SELECT i.chemin
+                           FROM image i
+                           WHERE i.id_article = a.id AND i.type_image = 1
+                           ORDER BY i.id ASC
+                           LIMIT 1
+                       ) AS image_url
                 FROM article a
                 LEFT JOIN categorie c ON a.id_categorie = c.id
                 WHERE a.id_categorie = :category_id
@@ -215,10 +243,17 @@ class FrontController
 
     private function searchArticles($query)
     {
-        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.image_url, a.id_categorie,
+        $sql = "SELECT a.id, a.titre, a.contenu, a.date_pub, a.id_categorie,
                        c.libelle AS categorie_libelle,
                        c.libelle AS category_name,
-                       a.id_categorie AS category_id
+                       a.id_categorie AS category_id,
+                       (
+                           SELECT i.chemin
+                           FROM image i
+                           WHERE i.id_article = a.id AND i.type_image = 1
+                           ORDER BY i.id ASC
+                           LIMIT 1
+                       ) AS image_url
                 FROM article a
                 LEFT JOIN categorie c ON a.id_categorie = c.id
                 WHERE a.titre LIKE :query OR a.contenu LIKE :query

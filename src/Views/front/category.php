@@ -9,7 +9,7 @@ $categoryId = $category['id'] ?? '';
     <!-- Breadcrumb -->
     <nav aria-label="Fil d'Ariane" class="breadcrumb" style="margin-bottom:var(--spacing-xl);font-size:var(--font-size-sm);">
         <ol style="list-style:none;padding:0;margin:0;display:flex;gap:var(--spacing-xs);flex-wrap:wrap;">
-            <li><a href="/">Accueil</a></li>
+            <li><a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>">Accueil</a></li>
             <li aria-hidden="true" style="color:var(--color-text-muted);">/</li>
             <li aria-current="page" style="color:var(--color-text-secondary);"><?= htmlspecialchars((string) $categoryName, ENT_QUOTES, 'UTF-8') ?></li>
         </ol>
@@ -34,7 +34,7 @@ $categoryId = $category['id'] ?? '';
                 <p style="color:var(--color-text-secondary);font-size:var(--font-size-lg);margin:0;">
                     Aucun article disponible dans cette catégorie pour le moment.
                 </p>
-                <a href="/" style="display:inline-block;margin-top:var(--spacing-lg);padding:var(--spacing-sm) var(--spacing-lg);background-color:var(--color-primary);color:white;border-radius:var(--border-radius-sm);text-decoration:none;font-weight:600;">
+                <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" style="display:inline-block;margin-top:var(--spacing-lg);padding:var(--spacing-sm) var(--spacing-lg);background-color:var(--color-primary);color:white;border-radius:var(--border-radius-sm);text-decoration:none;font-weight:600;">
                     Retour à l'accueil
                 </a>
             </div>
@@ -53,7 +53,7 @@ $categoryId = $category['id'] ?? '';
                         $excerpt .= '...';
                     }
                     
-                    $articleUrl = '/article/' . rawurlencode((string) $articleId);
+                    $articleUrl = app_url('article/' . rawurlencode((string) $articleId));
                     ?>
                     
                     <article class="article-card">

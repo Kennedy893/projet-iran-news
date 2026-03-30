@@ -6,15 +6,15 @@
                 <p class="footer-tagline">Information objective sur le conflit en Iran</p>
             </div>
             <nav class="footer-nav" aria-label="Liens utiles">
-                <a href="/">Accueil</a>
-                <a href="/search">Recherche</a>
-                <a href="/sitemap.php">Plan du site</a>
-                <a href="/mentions-legales">Mentions légales</a>
+                <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>">Accueil</a>
+                <a href="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>">Recherche</a>
+                <a href="<?= htmlspecialchars(app_url('sitemap.php'), ENT_QUOTES, 'UTF-8') ?>">Plan du site</a>
+                <a href="<?= htmlspecialchars(app_url('mentions-legales'), ENT_QUOTES, 'UTF-8') ?>">Mentions légales</a>
             </nav>
         </div>
     </footer>
 
     <!-- JavaScript -->
-    <script src="/assets/js/main.js" defer></script>
+    <script src="<?= htmlspecialchars(app_url('assets/js/main.js'), ENT_QUOTES, 'UTF-8') ?>" defer></script>
 </body>
 </html>

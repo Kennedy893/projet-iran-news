@@ -44,7 +44,7 @@ $categories = $categories ?? [];
                             <?php if (!empty($imageUrl)): ?>
                                 <a href="<?= $articleUrl ?>" aria-label="Lire l'article: <?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>">
                                     <img
-                                        src="<?= htmlspecialchars((string) $imageUrl, ENT_QUOTES, 'UTF-8') ?>"
+                                        src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
                                         alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
                                         loading="lazy">
                                 </a>

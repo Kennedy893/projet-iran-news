@@ -59,7 +59,7 @@ $articleId = $article['id'] ?? '';
         <?php if (!empty($imageUrl)): ?>
             <figure class="article-image" style="margin:0 0 var(--spacing-xl) 0;">
                 <img
-                    src="<?= htmlspecialchars((string) $imageUrl, ENT_QUOTES, 'UTF-8') ?>"
+                    src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
                     alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
                     style="width:100%;height:auto;max-height:500px;object-fit:cover;border-radius:var(--border-radius-md);">
             </figure>
@@ -114,7 +114,7 @@ $articleId = $article['id'] ?? '';
                     <article class="article-card">
                         <?php if (!empty($relatedImage)): ?>
                             <a href="<?= htmlspecialchars((string) $relatedUrl, ENT_QUOTES, 'UTF-8') ?>">
-                                <img src="<?= htmlspecialchars((string) $relatedImage, ENT_QUOTES, 'UTF-8') ?>"
+                                <img src="<?= htmlspecialchars(image_url((string) $relatedImage), ENT_QUOTES, 'UTF-8') ?>"
                                      alt="<?= htmlspecialchars((string) $relatedTitle, ENT_QUOTES, 'UTF-8') ?>"
                                      loading="lazy">
                             </a>

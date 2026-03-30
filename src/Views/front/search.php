@@ -97,7 +97,7 @@ $totalResults = count($results);
                         <?php if (!empty($imageUrl)): ?>
                             <a href="<?= $articleUrl ?>">
                                 <img
-                                    src="<?= htmlspecialchars((string) $imageUrl, ENT_QUOTES, 'UTF-8') ?>"
+                                    src="<?= htmlspecialchars(image_url((string) $imageUrl), ENT_QUOTES, 'UTF-8') ?>"
                                     alt="<?= htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8') ?>"
                                     loading="lazy">
                             </a>

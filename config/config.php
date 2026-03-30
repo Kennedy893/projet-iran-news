@@ -14,6 +14,42 @@ if (!function_exists('app_url')) {
     }
 }
 
+if (!function_exists('image_url')) {
+    function image_url($path = '', $fallback = 'assets/images/default-og-image.jpg')
+    {
+        $path = trim((string) $path);
+        if ($path === '') {
+            return app_url($fallback);
+        }
+
+        // Keep fully qualified or protocol-relative URLs unchanged.
+        if (preg_match('#^(?:https?:)?//#i', $path) || stripos($path, 'data:') === 0) {
+            return $path;
+        }
+
+        $normalized = ltrim($path, '/');
+        if (strpos($normalized, 'public/') === 0) {
+            $normalized = substr($normalized, 7);
+        }
+
+        // Legacy records may contain /uploads/file.jpg while files are in /uploads/articles/.
+        if (strpos($normalized, 'uploads/') === 0 && strpos($normalized, 'uploads/articles/') !== 0) {
+            $legacyCandidate = 'uploads/articles/' . basename($normalized);
+            $legacyFullPath = __DIR__ . '/../public/' . $legacyCandidate;
+            if (is_file($legacyFullPath)) {
+                $normalized = $legacyCandidate;
+            }
+        }
+
+        $fullPath = __DIR__ . '/../public/' . $normalized;
+        if (!is_file($fullPath)) {
+            return app_url($fallback);
+        }
+
+        return app_url($normalized);
+    }
+}
+
 // Base de données
 define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
 define('DB_NAME', getenv('DB_NAME') ?: 'iran_news');

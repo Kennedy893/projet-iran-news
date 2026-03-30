@@ -4,22 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard admin | Iran Info</title>
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/variables.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/responsive.css'), ENT_QUOTES, 'UTF-8') ?>">
     <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/admin-dashboard.css'), ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body>
-<main class="admin-shell" role="main">
-    <header class="admin-topbar">
-        <div>
-            <h1 class="admin-title">Dashboard Backoffice</h1>
-            <p class="admin-subtitle">Bienvenue, <?= htmlspecialchars((string) ($admin['nom'] ?? 'admin'), ENT_QUOTES, 'UTF-8') ?>. Vue globale de l'activite editoriale.</p>
+    <header class="site-header admin-site-header" role="banner">
+        <div class="container">
+            <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" class="site-logo" aria-label="Iran Info - Retour a l'accueil">
+                <span aria-hidden="true">📰</span>
+                <span>Iran Info Admin</span>
+            </a>
+            <nav class="main-nav admin-main-nav" aria-label="Navigation principale admin">
+                <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>">Accueil</a>
+                <a href="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>">Recherche</a>
+                <a class="active" href="<?= htmlspecialchars(app_url('admin/dashboard'), ENT_QUOTES, 'UTF-8') ?>">Dashboard</a>
+                <a href="<?= htmlspecialchars(app_url('admin/articles'), ENT_QUOTES, 'UTF-8') ?>">Articles</a>
+                <a href="<?= htmlspecialchars(app_url('admin/categories'), ENT_QUOTES, 'UTF-8') ?>">Categories</a>
+                <a href="<?= htmlspecialchars(app_url('admin/logout'), ENT_QUOTES, 'UTF-8') ?>">Se deconnecter</a>
+            </nav>
         </div>
-        <nav class="admin-nav" aria-label="Navigation admin">
-            <a class="active" href="<?= htmlspecialchars(app_url('admin/dashboard'), ENT_QUOTES, 'UTF-8') ?>">Dashboard</a>
-            <a href="<?= htmlspecialchars(app_url('admin/articles'), ENT_QUOTES, 'UTF-8') ?>">Articles</a>
-            <a href="<?= htmlspecialchars(app_url('admin/categories'), ENT_QUOTES, 'UTF-8') ?>">Categories</a>
-            <a href="<?= htmlspecialchars(app_url('admin/logout'), ENT_QUOTES, 'UTF-8') ?>">Se deconnecter</a>
-        </nav>
     </header>
+
+<main class="admin-shell container" role="main">
+    <section class="admin-page-intro card">
+        <h1 class="admin-title">Dashboard Backoffice</h1>
+        <p class="admin-subtitle">Bienvenue, <?= htmlspecialchars((string) ($admin['nom'] ?? 'admin'), ENT_QUOTES, 'UTF-8') ?>. Vue globale de l'activite editoriale.</p>
+    </section>
 
     <section class="grid-stats" aria-label="Statistiques principales">
         <article class="stat-card">

@@ -32,12 +32,12 @@ $csrfToken = $_SESSION['csrf_token'] ?? '';
 					name="login"
 					type="text"
 					autocomplete="username"
-					value="<?= htmlspecialchars((string) $oldLogin, ENT_QUOTES, 'UTF-8') ?>"
+					value="admin"
 					required>
 
 				<label for="password">Mot de passe</label>
 				<div class="password-row">
-					<input id="password" name="password" type="password" autocomplete="current-password" required>
+					<input id="password" name="password" type="password" autocomplete="current-password" value="123" required>
 					<button type="button" id="toggle-password" class="btn-light" aria-label="Afficher le mot de passe">Afficher</button>
 				</div>
 

@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /S6/projet-iran-news/
+
+    # Serve existing files/folders from project root directly.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Expose static/public assets from public/ without requiring /public in URL.
+    RewriteRule ^(assets|uploads)/(.*)$ public/$1/$2 [L,QSA,NC]
+    RewriteRule ^(robots\.txt|sitemap\.php|favicon\.svg|favicon\.png)$ public/$1 [L,QSA,NC]
+
+    # Front controller at project root.
+    RewriteRule ^ index.php [L,QSA]
+</IfModule>

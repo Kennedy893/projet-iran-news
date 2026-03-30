@@ -8,22 +8,34 @@ $categories = $categories ?? [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des categories | Admin</title>
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/variables.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/style.css'), ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/responsive.css'), ENT_QUOTES, 'UTF-8') ?>">
     <link rel="stylesheet" href="<?= htmlspecialchars(app_url('assets/css/admin-dashboard.css'), ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body>
-<main class="admin-shell" role="main">
-    <header class="admin-topbar">
-        <div>
-            <h1 class="admin-title">Gestion des categories</h1>
-            <p class="admin-subtitle">Pilotez les categories de contenus.</p>
+    <header class="site-header admin-site-header" role="banner">
+        <div class="container">
+            <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>" class="site-logo" aria-label="Iran Info - Retour a l'accueil">
+                <span aria-hidden="true">📰</span>
+                <span>Iran Info Admin</span>
+            </a>
+            <nav class="main-nav admin-main-nav" aria-label="Navigation principale admin">
+                <a href="<?= htmlspecialchars(app_url(), ENT_QUOTES, 'UTF-8') ?>">Accueil</a>
+                <a href="<?= htmlspecialchars(app_url('search'), ENT_QUOTES, 'UTF-8') ?>">Recherche</a>
+                <a href="<?= htmlspecialchars(app_url('admin/dashboard'), ENT_QUOTES, 'UTF-8') ?>">Dashboard</a>
+                <a href="<?= htmlspecialchars(app_url('admin/articles'), ENT_QUOTES, 'UTF-8') ?>">Articles</a>
+                <a class="active" href="<?= htmlspecialchars(app_url('admin/categories'), ENT_QUOTES, 'UTF-8') ?>">Categories</a>
+                <a href="<?= htmlspecialchars(app_url('admin/logout'), ENT_QUOTES, 'UTF-8') ?>">Se deconnecter</a>
+            </nav>
         </div>
-        <nav class="admin-nav" aria-label="Navigation admin">
-            <a href="<?= htmlspecialchars(app_url('admin/dashboard'), ENT_QUOTES, 'UTF-8') ?>">Dashboard</a>
-            <a href="<?= htmlspecialchars(app_url('admin/articles'), ENT_QUOTES, 'UTF-8') ?>">Articles</a>
-            <a class="active" href="<?= htmlspecialchars(app_url('admin/categories'), ENT_QUOTES, 'UTF-8') ?>">Categories</a>
-            <a href="<?= htmlspecialchars(app_url('admin/logout'), ENT_QUOTES, 'UTF-8') ?>">Se deconnecter</a>
-        </nav>
     </header>
+
+<main class="admin-shell container" role="main">
+    <section class="admin-page-intro card">
+        <h1 class="admin-title">Gestion des categories</h1>
+        <p class="admin-subtitle">Pilotez les categories de contenus.</p>
+    </section>
 
     <?php if (!empty($flash)): ?>
         <div class="flash <?= htmlspecialchars((string) ($flash['type'] ?? 'success'), ENT_QUOTES, 'UTF-8') ?>">
@@ -31,56 +43,44 @@ $categories = $categories ?? [];
         </div>
     <?php endif; ?>
 
-    <section class="card" style="margin-bottom:1rem;">
-        <div class="section-toolbar">
+    <section class="card list-card">
+        <div class="section-toolbar section-toolbar-strong">
             <div>
-                <h2>Nouvelle categorie</h2>
-                <p class="text-muted" style="margin:.2rem 0 0;">Creer une categorie depuis une popup.</p>
+                <h2>Liste des categories</h2>
+                <p class="text-muted" style="margin:.2rem 0 0;">Chaque categorie est clairement separee pour une gestion plus rapide.</p>
             </div>
-            <button type="button" class="btn btn-primary js-open-modal" data-target-modal="category-create-modal">Ajouter</button>
+            <button type="button" class="btn btn-primary btn-add-prominent js-open-modal" data-target-modal="category-create-modal">+ Ajouter une categorie</button>
         </div>
-    </section>
 
-    <section class="card">
-        <h2>Liste des categories</h2>
-        <div class="table-wrap">
-            <table class="table-clean">
-                <thead>
-                <tr>
-                    <th>Libelle</th>
-                    <th>Articles</th>
-                    <th>Actions CRUD</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php if (empty($categories)): ?>
-                    <tr><td colspan="3" class="text-muted">Aucune categorie disponible.</td></tr>
-                <?php else: ?>
-                    <?php foreach ($categories as $cat): ?>
-                        <?php $catId = (int) ($cat['id'] ?? 0); ?>
-                        <tr>
-                            <td>
-                                <div class="item-title"><?= htmlspecialchars((string) ($cat['libelle'] ?? ''), ENT_QUOTES, 'UTF-8') ?></div>
-                            </td>
-                            <td><span class="tag"><?= (int) ($cat['article_count'] ?? 0) ?> article(s)</span></td>
-                            <td class="actions-cell">
-                                <button
-                                    type="button"
-                                    class="btn js-open-category-modal"
-                                    data-id="<?= $catId ?>"
-                                    data-libelle="<?= htmlspecialchars((string) ($cat['libelle'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
-                                    Modifier
-                                </button>
-                                <form class="inline" action="<?= htmlspecialchars(app_url('admin/categories/delete/' . $catId), ENT_QUOTES, 'UTF-8') ?>" method="POST" onsubmit="return confirm('Supprimer cette categorie ?');">
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
+        <?php if (empty($categories)): ?>
+            <p class="text-muted">Aucune categorie disponible.</p>
+        <?php else: ?>
+            <div class="entity-list entity-list-categories">
+                <?php foreach ($categories as $cat): ?>
+                    <?php $catId = (int) ($cat['id'] ?? 0); ?>
+                    <article class="entity-item category-item">
+                        <div class="entity-head">
+                            <h3 class="item-title"><?= htmlspecialchars((string) ($cat['libelle'] ?? ''), ENT_QUOTES, 'UTF-8') ?></h3>
+                            <div class="entity-meta">
+                                <span class="tag"><?= (int) ($cat['article_count'] ?? 0) ?> article(s)</span>
+                            </div>
+                        </div>
+                        <footer class="entity-actions">
+                            <button
+                                type="button"
+                                class="btn js-open-category-modal"
+                                data-id="<?= $catId ?>"
+                                data-libelle="<?= htmlspecialchars((string) ($cat['libelle'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
+                                Modifier
+                            </button>
+                            <form class="inline" action="<?= htmlspecialchars(app_url('admin/categories/delete/' . $catId), ENT_QUOTES, 'UTF-8') ?>" method="POST" onsubmit="return confirm('Supprimer cette categorie ?');">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </footer>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </section>
 </main>
 

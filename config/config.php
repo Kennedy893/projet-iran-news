@@ -2,7 +2,7 @@
 // Configuration générale
 define('APP_NAME', 'Iran Info');
 // URL racine de l'application (sans slash final).
-$configuredAppUrl = getenv('APP_URL') ?: 'http://localhost/S6/projet-iran-news/public';
+$configuredAppUrl = getenv('APP_URL') ?: 'http://localhost/S6/projet-iran-news';
 define('APP_URL', rtrim($configuredAppUrl, '/'));
 define('APP_ENV', 'development'); // production / development
 

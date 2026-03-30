@@ -1,0 +1,172 @@
+/**
+ * IRAN INFO - Responsive CSS
+ * Breakpoints: Mobile First
+ */
+
+/* === MOBILE (par défaut) === */
+/* Styles déjà définis dans style.css pour mobile */
+
+/* === TABLETTE (≥768px) === */
+@media (max-width: 1023px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+  
+  aside {
+    position: static;
+  }
+}
+
+/* === MOBILE (≤767px) === */
+@media (max-width: 767px) {
+  /* Typographie mobile */
+  html {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  h2 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .home-hero h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  /* Header mobile */
+  .site-header .container {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .main-nav {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-sm);
+  }
+  
+  .main-nav a {
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Layout mobile */
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  main {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .home-hero {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+  
+  .home-grid {
+    gap: var(--spacing-lg);
+  }
+  
+  /* Cards mobile */
+  .article-card {
+    padding: var(--spacing-md);
+  }
+  
+  .article-card img {
+    height: 200px;
+  }
+  
+  /* Footer mobile */
+  .site-footer .container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .footer-nav {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+}
+
+/* === PETITS MOBILES (≤480px) === */
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+  
+  .article-card img {
+    height: 180px;
+  }
+  
+  .home-hero {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  .article-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+}
+
+/* === GRANDS ÉCRANS (≥1280px) === */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1200px;
+  }
+  
+  .home-hero h1 {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+/* === TRÈS GRANDS ÉCRANS (≥1536px) === */
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+/* === IMPRESSION === */
+@media print {
+  .site-header,
+  .site-footer,
+  .main-nav,
+  aside,
+  .read-more {
+    display: none;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .article-card {
+    border: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+  
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+}
+
+/* === ANIMATIONS === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

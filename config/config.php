@@ -2,7 +2,21 @@
 // Configuration générale
 define('APP_NAME', 'Iran Info');
 // URL racine de l'application (sans slash final).
-$configuredAppUrl = getenv('APP_URL') ?: 'http://localhost/S6/projet-iran-news';
+$configuredAppUrl = getenv('APP_URL');
+if (!$configuredAppUrl) {
+    $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (isset($_SERVER['SERVER_PORT']) && (string) $_SERVER['SERVER_PORT'] === '443');
+    $scheme = $https ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+    $scriptName = (string) ($_SERVER['SCRIPT_NAME'] ?? '/index.php');
+    $basePath = rtrim(str_replace('\\', '/', dirname($scriptName)), '/');
+    if ($basePath === '/' || $basePath === '.') {
+        $basePath = '';
+    }
+
+    $configuredAppUrl = $scheme . '://' . $host . $basePath;
+}
 define('APP_URL', rtrim($configuredAppUrl, '/'));
 define('APP_ENV', 'development'); // production / development
 

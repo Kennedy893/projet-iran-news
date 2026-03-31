@@ -1,0 +1,48 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iran-news-web
+    depends_on:
+      - db
+    environment:
+      APP_ENV: development
+      APP_URL: http://localhost:8080
+      DB_HOST: db
+      DB_NAME: iran_news
+      DB_USER: root
+      DB_PASS: root_password
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+
+  db:
+    image: mysql:8.0
+    container_name: iran-news-db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/database.sql:/docker-entrypoint-initdb.d/01_database.sql:ro
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: iran-news-phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root_password
+    ports:
+      - "8081:80"
+
+volumes:
+  mysql_data:

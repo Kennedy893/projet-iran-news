@@ -36,3 +36,40 @@ A préparer pour	livraison Forms	:	- - -
 
 Délai	
     Mardi 31 mars à 14h00
+
+## Lancement avec Docker
+
+Prerequis:
+- Docker Desktop (ou Docker Engine + plugin compose)
+
+Depuis la racine du projet:
+
+```bash
+docker compose up -d --build
+```
+
+Acces:
+- Application: http://localhost:8080
+- phpMyAdmin: http://localhost:8081
+    - Serveur: `db`
+    - Utilisateur: `root`
+    - Mot de passe: `root_password`
+
+La base MySQL est initialisee automatiquement au premier demarrage avec:
+- `sql/database.sql`
+
+Important: les scripts `docker-entrypoint-initdb.d` sont executes uniquement lors de la creation initiale du volume MySQL (base vide).
+Pour rejouer `database.sql`, il faut supprimer le volume:
+
+Arreter les conteneurs:
+
+```bash
+docker compose down
+```
+
+Reinitialiser completement la base:
+
+```bash
+docker compose down -v
+docker compose up -d --build
+```

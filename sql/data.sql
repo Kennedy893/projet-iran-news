@@ -126,15 +126,15 @@ INSERT INTO article (titre, contenu, date_pub, id_categorie) VALUES
 -- IMAGES (1 primaire + 1 secondaire par article)
 -- ------------------------------
 INSERT INTO image (chemin, type_image, id_article) VALUES
-('/uploads/1.jpeg', 1, 1), ('/uploads/1-b.jpeg', 2, 1),
-('/uploads/2.jpeg', 1, 2), ('/uploads/2-b.jpeg', 2, 2),
-('/uploads/3.jpeg', 1, 3), ('/uploads/3-b.jpeg', 2, 3),
-('/uploads/4.jpeg', 1, 4), ('/uploads/4-b.jpeg', 2, 4),
-('/uploads/5.jpeg', 1, 5), ('/uploads/5-b.jpeg', 2, 5),
-('/uploads/6.jpeg', 1, 6), ('/uploads/6-b.jpeg', 2, 6),
-('/uploads/7.jpeg', 1, 7), ('/uploads/7-b.jpeg', 2, 7),
-('/uploads/8.jpeg', 1, 8), ('/uploads/8-b.jpeg', 2, 8),
-('/uploads/9.jpeg', 1, 9), ('/uploads/9-b.jpeg', 2, 9),
-('/uploads/10.jpeg', 1, 10), ('/uploads/10-b.jpeg', 2, 10),
-('/uploads/11.jpeg', 1, 11), ('/uploads/11-b.jpeg', 2, 11),
-('/uploads/12.jpeg', 1, 12), ('/uploads/12-b.jpeg', 2, 12);
+('/uploads/iran-manifestations-teheran-civils-primary.jpeg', 1, 1), ('/uploads/iran-manifestations-teheran-civils-secondary.jpeg', 2, 1),
+('/uploads/iran-coupures-electricite-provinces-primary.jpeg', 1, 2), ('/uploads/iran-coupures-electricite-provinces-secondary.jpeg', 2, 2),
+('/uploads/iran-russie-chine-conflit-geopolitique-primary.jpeg', 1, 3), ('/uploads/iran-russie-chine-conflit-geopolitique-secondary.jpeg', 2, 3),
+('/uploads/iran-recomposition-alliances-regionales-primary.jpeg', 1, 4), ('/uploads/iran-recomposition-alliances-regionales-secondary.jpeg', 2, 4),
+('/uploads/iran-fragilites-economiques-analyse-primary.jpeg', 1, 5), ('/uploads/iran-fragilites-economiques-analyse-secondary.jpeg', 2, 5),
+('/uploads/iran-unite-nationale-tensions-ethniques-primary.jpeg', 1, 6), ('/uploads/iran-unite-nationale-tensions-ethniques-secondary.jpeg', 2, 6),
+('/uploads/iran-exil-famille-isfahan-temoignage-primary.jpeg', 1, 7), ('/uploads/iran-exil-famille-isfahan-temoignage-secondary.jpeg', 2, 7),
+('/uploads/iran-medecin-ahvaz-hopital-temoignage-primary.jpeg', 1, 8), ('/uploads/iran-medecin-ahvaz-hopital-temoignage-secondary.jpeg', 2, 8),
+('/uploads/iran-bilan-militaire-nord-ouest-primary.jpeg', 1, 9), ('/uploads/iran-bilan-militaire-nord-ouest-secondary.jpeg', 2, 9),
+('/uploads/iran-drones-guerre-futur-primary.jpeg', 1, 10), ('/uploads/iran-drones-guerre-futur-secondary.jpeg', 2, 10),
+('/uploads/iran-sanctions-americaines-economie-primary.jpeg', 1, 11), ('/uploads/iran-sanctions-americaines-economie-secondary.jpeg', 2, 11),
+('/uploads/iran-pourparlers-geneve-diplomatie-primary.jpeg', 1, 12), ('/uploads/iran-pourparlers-geneve-diplomatie-secondary.jpeg', 2, 12);

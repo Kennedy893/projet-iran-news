@@ -13,7 +13,7 @@ $folders = @(
     "src\Views\admin\layout", "src\Views\admin\articles",
     "src\Views\admin\categories", "src\Views\admin\users",
     "src\Core", "src\Helpers", "src\Middleware",
-    "config", "sql", "docker", "logs"
+    "config", "sql", "logs"
 )
 
 foreach ($folder in $folders) {
@@ -24,14 +24,14 @@ foreach ($folder in $folders) {
 $files = @(
     "public\index.php", "public\.htaccess", "public\robots.txt",
     "config\config.php", "sql\database.sql",
-    "docker\docker-compose.yml", ".env.example", ".gitignore"
+  "docker-compose.yml", "Dockerfile", ".env.example", ".gitignore"
 )
 
 foreach ($file in $files) {
     New-Item -ItemType File -Path $file -Force | Out-Null
 }
 
-# Création du docker-compose.yml minimal
+# Création du docker-compose.yml minimal a la racine
 @'
 version: '3.8'
 services:
@@ -40,18 +40,23 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./public:/var/www/html
+      - ./:/var/www/html
   db:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: iran_news
     ports:
-      - "3306:3306"
-'@ | Out-File -FilePath "docker\docker-compose.yml" -Encoding UTF8
+      - "3307:3306"
+'@ | Out-File -FilePath "docker-compose.yml" -Encoding UTF8
+
+# Création du Dockerfile minimal a la racine
+@'
+FROM php:8.2-apache
+'@ | Out-File -FilePath "Dockerfile" -Encoding UTF8
 
 Write-Host "✅ Structure créée !" -ForegroundColor Green
 Write-Host ""
 Write-Host "Pour démarrer :" -ForegroundColor Yellow
 Write-Host "cd projet-iran-news"
-Write-Host "docker-compose -f docker\docker-compose.yml up -d"
+Write-Host "docker compose up -d"

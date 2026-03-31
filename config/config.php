@@ -98,21 +98,23 @@ if (!function_exists('image_url')) {
             $normalized = substr($normalized, 7);
         }
 
-        // Legacy records may contain /uploads/file.jpg while files are in /uploads/articles/.
+        // First priority: Check if file exists at the stored path (images in /uploads/)
+        $fullPath = __DIR__ . '/../public/' . $normalized;
+        if (is_file($fullPath)) {
+            return app_url($normalized);
+        }
+
+        // Fallback: Legacy records may contain /uploads/file.jpg while files are in /uploads/articles/.
         if (strpos($normalized, 'uploads/') === 0 && strpos($normalized, 'uploads/articles/') !== 0) {
             $legacyCandidate = 'uploads/articles/' . basename($normalized);
             $legacyFullPath = __DIR__ . '/../public/' . $legacyCandidate;
             if (is_file($legacyFullPath)) {
-                $normalized = $legacyCandidate;
+                return app_url($legacyCandidate);
             }
         }
 
-        $fullPath = __DIR__ . '/../public/' . $normalized;
-        if (!is_file($fullPath)) {
-            return app_url($fallback);
-        }
-
-        return app_url($normalized);
+        // Final fallback: Return default image
+        return app_url($fallback);
     }
 }
 
